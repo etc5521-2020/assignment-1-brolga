@@ -18,12 +18,18 @@ library("readr")
 
 [This assignment is for ETC5521 Assignment 1 by Team `r rmarkdown::metadata$team` comprising of `r knitr::combine_words(rmarkdown::metadata$author)`.]{style="color:#006DAE;"}
 
-```{r read-in-data}
-critic <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
-user_reviews <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
-items <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv')
-villagers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv')
+```{r retreiving-and-saving-data-files, eval=FALSE}
+write_csv(readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv'), "Data/critics.csv")
+write_csv(readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv'), "Data/user-reviews.csv") 
+write_csv(readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv'), "Data/items.csv")
+write_csv(readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv'), "Data/villagers.csv")
+```
 
+```{r reading-in-data}
+critics <- read_csv("Data/critics.csv")
+user_reviews <- read_csv("Data/user-reviews.csv")
+items <- read_csv("Data/items.csv")
+villagers <- read_csv("Data/villagers.csv")
 ```
 
 
