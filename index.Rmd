@@ -47,6 +47,10 @@ Potential Questions
 
 # Data description
 
+The dataset used for this analysis was retreived from [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a project aimed at allowing individuals to practice their data wrangling and visualization skills through the use of real-world data sets.
+
+The retreived dataset consisted of four sub-datasets; collectd from their original sources, wrangled and put into tidy form.
+
 # Analysis and findings
 
 [FILL] Should include at least one plot or numerical summary for each of your questions, that helps the reader arrive at an answer. You should also write paragraphs describing the methods, summaries and findings. 
