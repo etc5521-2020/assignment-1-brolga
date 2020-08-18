@@ -14,6 +14,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library("tidyverse")
 library("readr")
+library("kableExtra")
 ```
 
 [This assignment is for ETC5521 Assignment 1 by Team `r rmarkdown::metadata$team` comprising of `r knitr::combine_words(rmarkdown::metadata$author)`.]{style="color:#006DAE;"}
@@ -49,7 +50,23 @@ Potential Questions
 
 The dataset used for this analysis was retreived from [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a project aimed at allowing individuals to practice their data wrangling and visualization skills through the use of real-world data sets.
 
-The retreived dataset consisted of four sub-datasets; collectd from their original sources, wrangled and put into tidy form.
+The retreived dataset consisted of four sub-datasets -  collected from their original sources, wrangled and put into tidy form. Each of the four sub-datasets are detailed below.
+
+```{r}
+data_dict <- function(df, desc = c()){
+  return(data.frame(
+    "Variable" = names(df),
+    "Description" = desc, 
+    check.names = FALSE, row.names = NULL
+  ) %>%
+    kable() %>%
+    kable_styling(bootstrap_options = c("striped")))
+}
+```
+
+```{r}
+data_dict(user_reviews, c("Raw score(0-10) given, 0-lowest and 10-highest","User name of the reviewer","Raw text of the review","Date the review was published"))
+```
 
 # Analysis and findings
 
