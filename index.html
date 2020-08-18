@@ -396,7 +396,260 @@ summary {
 <div id="data-description" class="section level1">
 <h1>Data description</h1>
 <p>The dataset used for this analysis was retreived from <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a>; a project aimed at allowing individuals to practice their data wrangling and visualization skills through the use of real-world data sets.</p>
-<p>The retreived dataset consisted of four sub-datasets - collected from their original sources, wrangled and put into tidy form. Each of the four sub-datasets are detailed below.</p>
+<p>The retreived dataset consisted of four sub-datasets; ‘villagers’ and ‘items’ datasets containing data about in-game characters and items, and ‘user reviews’ and ‘critic reviews’ datasets contatining data about user and critics reviews on the game.</p>
+<p>The ‘villagers’ and ‘items’ datasets have been originally retreived from <a href="https://github.com/jefflomacy/villagerdb">VillagerDB</a>, which is a project aimed at making data about Animal Crossing available and easily accessible, while the user and critic reviews have been originally retreived by scraping the <a href="https://www.metacritic.com/game/switch/animal-crossing-new-horizons/critic-reviews">Metacritic</a> website.</p>
+<div id="data-dictionary" class="section level3">
+<h3>Data dictionary</h3>
+<p><strong>Villagers</strong></p>
+<p>The ‘Villagers’ dataset consists of data related to the characters in the Animal Crossing game world. The following are the variables in the villagers dataset and their descriptions.</p>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+row_n
+</td>
+<td style="text-align:left;">
+Numeric identifier of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+id
+</td>
+<td style="text-align:left;">
+Short text identifier of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+name
+</td>
+<td style="text-align:left;">
+Name of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:left;">
+Gender of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+species
+</td>
+<td style="text-align:left;">
+Species of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+birthday
+</td>
+<td style="text-align:left;">
+Birthday of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+personality
+</td>
+<td style="text-align:left;">
+Personality of Villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+song
+</td>
+<td style="text-align:left;">
+Song associated with villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phrase
+</td>
+<td style="text-align:left;">
+Catchphrase of the villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+full_id
+</td>
+<td style="text-align:left;">
+Full text identifier of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+url
+</td>
+<td style="text-align:left;">
+Link to image of villager
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Items</strong></p>
+<p>The ‘Items’ dataset consists of data related to the items in the Animal Crossing game world. The following are the variables in the items dataset and their descriptions.</p>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+num_id
+</td>
+<td style="text-align:left;">
+Numeric identifier of item
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+id
+</td>
+<td style="text-align:left;">
+Character identifier of villager
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+name
+</td>
+<td style="text-align:left;">
+Name of item
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+category
+</td>
+<td style="text-align:left;">
+Category of item
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+orderable
+</td>
+<td style="text-align:left;">
+Orderable from catalog
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sell_value
+</td>
+<td style="text-align:left;">
+Selling value
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sell_currency
+</td>
+<td style="text-align:left;">
+Selling currency
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+buy_value
+</td>
+<td style="text-align:left;">
+Buying value
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+buy_currency
+</td>
+<td style="text-align:left;">
+Buying currency
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sources
+</td>
+<td style="text-align:left;">
+Way/place to acquire item
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+customizable
+</td>
+<td style="text-align:left;">
+Is item customizable
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+recipe
+</td>
+<td style="text-align:left;">
+Recipe number
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+recipe_id
+</td>
+<td style="text-align:left;">
+Recipe ID
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+games_id
+</td>
+<td style="text-align:left;">
+Game ID
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+id_full
+</td>
+<td style="text-align:left;">
+Full Character ID
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+image_url
+</td>
+<td style="text-align:left;">
+Link to image of item
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>User Reviews</strong></p>
+<p>The ‘User Reviews’ dataset consists of the scores and reviews made by users from 2020-03-20 to 2020-05-03.</p>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -443,6 +696,55 @@ Date the review was published
 </tr>
 </tbody>
 </table>
+<p><strong>Critic Reviews</strong></p>
+<p>The ‘Critic Reviews’ dataset consists of the scores and reviews made by critics about the game from 2020-03-16 to 2020-05-01.</p>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+grade
+</td>
+<td style="text-align:left;">
+Raw score(0-100) given, 0-lowest and 100-highest
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+publication
+</td>
+<td style="text-align:left;">
+The source of the reviewer
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text
+</td>
+<td style="text-align:left;">
+Raw text of the review
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Date the review was published
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="analysis-and-findings" class="section level1">
 <h1>Analysis and findings</h1>
