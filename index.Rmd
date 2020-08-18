@@ -36,10 +36,14 @@ villagers <- read_csv("Data/villagers.csv")
 
 # Introduction and motivation
 
-[FILL] Give the bigger picture of the data, and inspire the reader to learn more about the problem by reading your analysis. 
+[`r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`]{style="align:right;"}
 
-Research findings  
-- Animal Crossing New Horizons was released worldwide on 20 Mar 2020
+Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020.
+
+Since it's inception the game has had an astounding world-side reception With over 22 million copies of the game being sold worlwide in just 5 months.
+
+Animal crossing: New Horizons is a simulation video game where the player takes the role of a customized human character who moves to a deserted island. The character then carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals.
+
 
 Potential Questions  
 - What do players and critics think of the game?  
