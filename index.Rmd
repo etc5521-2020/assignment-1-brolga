@@ -38,11 +38,13 @@ villagers <- read_csv("Data/villagers.csv")
 
 [`r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`]{style="align:right;"}
 
-Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020.
+Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since it's inception the game has had an astounding world-side reception With over 22 million copies of the game being sold worlwide in just 5 months.
 
-Since it's inception the game has had an astounding world-side reception With over 22 million copies of the game being sold worlwide in just 5 months.
+In the animal crossing world a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called villagers in the animal crossing world, have their own name, gender, birthday, personality, favourite song and their own catchprhase. The items used in performing different tasks in the animal crossing belong to different categories and are also priced at different buying and selling values.
 
-Animal crossing: New Horizons is a simulation video game where the player takes the role of a customized human character who moves to a deserted island. The character then carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals.
+Although it has been 5 months since the game was released worldwide, it has been gaining alot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
+
+Therefore, the following is an analysis of the villagers and items used in the Animal Crossing world and the views of the players and critics about the game.
 
 
 Potential Questions  
@@ -102,7 +104,6 @@ The 'Critic Reviews' dataset consists of the scores and reviews made by critics 
 ```{r}
 data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The source of the reviewer","Raw text of the review","Date the review was published"))
 ```
-
 
 # Analysis and findings
 
