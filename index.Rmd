@@ -42,18 +42,12 @@ Animal Crossing: New Horizons is a life simulation video game developed and publ
 
 In the animal crossing world a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called villagers in the animal crossing world, have their own name, gender, birthday, personality, favourite song and their own catchprhase. The items used in performing different tasks in the animal crossing belong to different categories and are also priced at different buying and selling values.
 
-Although it has been 5 months since the game was released worldwide, it has been gaining alot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
+Although it has been 5 only months since the game was released worldwide, it has been gaining alot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
+
+THe motivation for choosing Animal Crossing in the analysis is to attempt to understand the reason for the immense popularity of the game using user and critic reviews and features within the game (such as the villagers and the items).
 
 Therefore, the following is an analysis of the villagers and items used in the Animal Crossing world and the views of the players and critics about the game.
 
-# Motivation
-For the motivation,why choose the <animals crossing> for ours topic.animals crossing hasbeen one of the biggest selling games in months at the switch platform. We want to know that what the reason is. Though analysis the user's feedback, critic and the game mode(such as the villagers and the iteams)to get the reason.
-
-
-Potential Questions  
-- What do players and critics think of the game?  
-- An analysis of the personalities of the villagers based on their demographics.  
-- An analysis of the items and how to maximize profit by buying and selling them.  
 
 # Data description
 
@@ -107,6 +101,8 @@ The 'Critic Reviews' dataset consists of the scores and reviews made by critics 
 ```{r}
 data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The source of the reviewer","Raw text of the review","Date the review was published"))
 ```
+
+# Methodology
 
 # Analysis and findings
 
