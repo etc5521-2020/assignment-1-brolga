@@ -108,4 +108,38 @@ data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The sou
 
 [FILL] Should include at least one plot or numerical summary for each of your questions, that helps the reader arrive at an answer. You should also write paragraphs describing the methods, summaries and findings. 
 
+# Section:analysis game mode
+
+```{r analysis species}
+dat <- villagers%>%
+  select(species)%>%
+  group_by(species)%>%
+  mutate(case=n())%>%
+  mutate(prop = round(n()/381*100))%>%
+  arrange(-case)%>%
+  unique()
+print(dat)
+
+```
+
+
+
+```{r analysis personality}
+dat <- villagers%>%
+  select(personality)%>%
+  group_by(personality)%>%
+  mutate(case=n())%>%
+  mutate(prop = round(n()/381*100))%>%
+  arrange(-case)%>%
+  unique()
+
+print(dat)
+
+```
+
+
+
+
+
+
 # References

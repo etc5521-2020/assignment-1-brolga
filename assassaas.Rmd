@@ -1,0 +1,46 @@
+---
+title: "Untitled"
+author: "DIYAO CHEN"
+date: "2020/8/22"
+output: html_document
+---
+
+
+
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library("tidyverse")
+library("readr")
+library("kableExtra")
+```
+
+
+```{r reading-in-data}
+critics <- read_csv("Data/critics.csv")
+user_reviews <- read_csv("Data/user-reviews.csv")
+items <- read_csv("Data/items.csv")
+villagers <- read_csv("Data/villagers.csv")
+
+print(villagers)
+print(items)
+```
+
+
+
+
+
+```{r 22222}
+dat <- villagers%>%
+  select(species)%>%
+  group_by(species)%>%
+  mutate(case=n())%>%
+  arrange(-case)%>%
+  unique()
+
+print(dat)
+
+```
+
+
+
+
