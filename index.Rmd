@@ -38,15 +38,30 @@ villagers <- read_csv("Data/villagers.csv")
 
 [`r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`]{style="align:right;"}
 
-Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since it's inception the game has had an astounding world-side reception With over 22 million copies of the game being sold worlwide in just 5 months.
+Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since it's inception the game has had an astounding world-wide reception With over 22 million copies of the game being sold in just 5 months.
 
 In the animal crossing world a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called villagers in the animal crossing world, have their own name, gender, birthday, personality, favourite song and their own catchprhase. The items used in performing different tasks in the animal crossing belong to different categories and are also priced at different buying and selling values.
 
 Although it has been 5 only months since the game was released worldwide, it has been gaining alot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
 
-THe motivation for choosing Animal Crossing in the analysis is to attempt to understand the reason for the immense popularity of the game using user and critic reviews and features within the game (such as the villagers and the items).
+The motivation for choosing Animal Crossing for the analysis is to attempt to understand the reason for the immense popularity of the game using user and critic reviews and features within the game (such as the villagers and the items).
 
-Therefore, the following is an analysis of the villagers and items used in the Animal Crossing world and the views of the players and critics about the game.
+Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided into two broad areas and answers the following sub-questions.
+
+**An analysis of the villagers and items used in the Animal Crossing world**  
+
+* What are the most common species of animals(villagers) in the Animal Crossing world?  
+* What are the personality types of the villagers?  
+* What are the most common star signs of the villagers based on their birthdates?  
+* What are the different categories of items available in the Animal Crossing world?  
+* What are the cheapest and most expensive items available?
+* How can players maximize their profits by buying and selling items?
+
+**The view of the players and critics about Animal Crossing**
+
+* What are the most common words users and critics use to describe Animal Crossing?  
+* What is the trend of user and critic reviews on the Animal Crossing game?  
+* What are the sentiments and emotions portrayed by the users and critics reviews?  
 
 
 # Data description
@@ -102,10 +117,18 @@ The 'Critic Reviews' dataset consists of the scores and reviews made by critics 
 data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The source of the reviewer","Raw text of the review","Date the review was published"))
 ```
 
-# Methodology
+# Data Exploration
 
 # Analysis and findings
 
-[FILL] Should include at least one plot or numerical summary for each of your questions, that helps the reader arrive at an answer. You should also write paragraphs describing the methods, summaries and findings. 
+[FILL] Should include at least one plot or numerical summary for each of your questions, that helps the reader arrive at an answer. You should also write paragraphs describing the methods, summaries and findings.
+
+```{r}
+villagers %>%
+  ggplot(aes(x = species,
+             fill = gender)) +
+  geom_bar() +
+  coord_flip()
+```
 
 # References
