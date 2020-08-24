@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library("tidyverse")
 library("readr")
 library("kableExtra")
+library("visdat")
 ```
 
 [This assignment is for ETC5521 Assignment 1 by Team `r rmarkdown::metadata$team` comprising of `r knitr::combine_words(rmarkdown::metadata$author)`.]{style="color:#006DAE;"}
@@ -56,6 +57,7 @@ Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided 
 * What are the different categories of items available in the Animal Crossing world?  
 * What are the cheapest and most expensive items available?
 * How can players maximize their profits by buying and selling items?
+* Where can players find items and in what time periods?
 
 **The view of the players and critics about Animal Crossing**
 
@@ -117,7 +119,40 @@ The 'Critic Reviews' dataset consists of the scores and reviews made by critics 
 data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The source of the reviewer","Raw text of the review","Date the review was published"))
 ```
 
-# Data Exploration
+# Data Exploration and Wrangling
+
+
+### Visualising Missing Values
+
+```{r}
+vis_miss(items)
+```
+
+### Currency conversion
+
+The buying and selling currencies of items in the animal crossing world were expressed in two currencies; Bells and Miles. For simplification of the analysis all buying and selling prices were converted into Bells.
+
+[The Nintendo guides](https://www.nintendolife.com/guides/animal-crossing-new-horizons-bells-how-to-make-bells-fast-nook-miles-and-money-explained#exchange-a-bell-voucher-500-nook-miles-for-3000-bells) states that a Bell Voucher can be bought for 500 Nook Miles, which can thereafter be exchanged for 3000 Bells in the Animal Crossing world . Therefore it was assumed that each Mile equated to 6 Miles in the currency convesion.
+
+```{r currency-conversion}
+items <- items %>%
+  mutate(buy_value = case_when(
+    buy_currency == "miles" ~ buy_value*6,
+    TRUE ~ buy_value
+  )) %>%
+  mutate(buy_currency = case_when(
+    buy_currency == "miles" ~ "bells",
+    TRUE ~ buy_currency
+  )) %>%
+  mutate(sell_value = case_when(
+    sell_currency == "miles" ~ sell_value*6,
+    TRUE ~ sell_value
+  )) %>%
+  mutate(sell_currency = case_when(
+    sell_currency == "miles" ~ "bells",
+    TRUE ~ sell_currency
+  ))
+```
 
 # Analysis and findings
 
