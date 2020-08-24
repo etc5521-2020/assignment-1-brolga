@@ -127,9 +127,8 @@ dat <- villagers%>%
   kable_styling(latex_options = c("striped", "hold_position"))
 
 ```
-
-
-
+ 
+ 
 ```{r graph of species}
 Graph<- dat %>%
   ggplot(aes(x =reorder(species,-prop), y = prop, fill = species))+
@@ -141,6 +140,7 @@ Graph<- dat %>%
 Graph
 ```
 
+Base on the analysis, we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.
 
 
 
