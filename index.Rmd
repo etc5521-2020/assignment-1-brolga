@@ -109,7 +109,9 @@ data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The sou
 [FILL] Should include at least one plot or numerical summary for each of your questions, that helps the reader arrive at an answer. You should also write paragraphs describing the methods, summaries and findings. 
 
 # Section:analysis game mode
+Anmials crossing as a hot shell games, the ways of paly the game is unique.Now, we will do some research of the unique villagers system.
 
+NPC,which is non-player character.It is an essential part of every game, which can guide the player how to play the game better.but,in anmials crossing,NPC become villagers,They will not only teach you to play games, but also accompany you in your live in the game world. 
 ```{r analysis species}
 dat <- villagers%>%
   select(species)%>%
@@ -118,9 +120,32 @@ dat <- villagers%>%
   mutate(prop = round(n()/381*100))%>%
   arrange(-case)%>%
   unique()
-print(dat)
+
+
+ knitr::kable(head(dat,10),
+  caption = "Table. Ranking of villagers species") %>% 
+  kable_styling(latex_options = c("striped", "hold_position"))
 
 ```
+
+
+
+```{r graph of species}
+Graph<- dat %>%
+  ggplot(aes(x =reorder(species,-prop), y = prop, fill = species))+
+  geom_bar(stat = "identity", show.legend = FALSE)+
+  ggtitle("Analysis the different species of villagers")+
+  theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
+  labs(x = "species" , y = "prop")+
+   geom_text(aes(label=prop),position = position_stack(vjust=1.1))
+Graph
+```
+
+
+
+
+
+
 
 
 
