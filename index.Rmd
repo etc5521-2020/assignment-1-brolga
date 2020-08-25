@@ -18,6 +18,7 @@ library(kableExtra)
 library(visdat)
 library(tidytext)
 library(wordcloud)
+library(plotly)
 set.seed(5521.2020)
 ```
 
@@ -258,7 +259,9 @@ user_reviews %>%
   ggplot(aes(x=date,
              y=count)) +
   geom_line() +
-  scale_x_date(date_breaks = "1 week")
+  scale_x_date(date_breaks = "1 week") +
+  labs(x = "Date",
+       y = "Number of user reviews")
 ```
 
 The astounding reception of Animal Crossing: New Horizons since its world release on the 20th of March 2020 is justified by the number of daily user reviews it has received. However Figure \@ref(fig:user-review-trend) shows a huge spike in the number of reviews on the 24th of March 2020, lasting till about the 26th of March 2020, which may be attributed to the world release of the game on the 20th of March 2020. The number of reviews there after remain consistent other than another smaller spike around the 28th of April 2020.
@@ -289,7 +292,9 @@ The user reviews also includes a score from 0-10, where 0 is the lowest and 10 i
 ```{r user-review-scores, fig.cap="Distribution of user review scores on Animal Crossing: New Horizons"}
 user_reviews %>%
   ggplot(aes(x=grade)) +
-  geom_bar()
+  geom_bar() +
+  labs(x = "Review score",
+       y = "Number of reviews")
 ```
 
 Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scroing the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
@@ -309,7 +314,8 @@ user_review_sentiments <- user_review_words %>%
 user_review_sentiments %>%
   ungroup() %>%
   ggplot(aes(x = mean_sent)) +
-  geom_boxplot()
+  geom_boxplot() +
+  labs(x = "User review sentiment score")
 ```
 
 The boxplot in figure \@ref(fig:user-review-sentiments) states that the overall sentiment of the user reviews to be just slightly positive at 0.4, which is surprising as it would've been expected to be much higher with the recent popularity it has gotten. Most of the sentiments of the reviews also lie within a range of -1 to +1, which may indicate to us that Animal crossing isn't enjoyed by all and there are as many users dissatisfied by the game or disliking the game as those enjoying it.
@@ -320,7 +326,9 @@ The mean sentiment score of each review against its review score is plotted in f
 user_review_sentiments %>%
   ggplot(aes(x = mean_sent,
              y = grade)) +
-  geom_point()
+  geom_point() +
+  labs(x = "User review sentiment score",
+       y = "User review score")
 ```
 
 The distribution of points over the plot signifies no clear relationship among the sentiments of the review text and score.
@@ -337,7 +345,9 @@ critics %>%
   ggplot(aes(x=date,
              y=count)) +
   geom_line() +
-  scale_x_date(date_breaks = "1 week")
+  scale_x_date(date_breaks = "1 week") +
+  labs(x = "Date",
+       y = "Number of Reviews")
 ```
 
 Figure \@ref(fig:critic-review-trend) represents the trend in the number of critic reviews over time. Most critics have reviewed the game on the 16th of March, just before the world release of the game, while a smaller number of critics have made reviews in the days following that.
@@ -392,9 +402,13 @@ critic_word_sent_category <- critic_words %>%
   inner_join(nrc, by = "word")
 
 critic_word_sent_category %>%
-  ggplot(aes(x = fct_infreq(sentiment))) +
+  ggplot(aes(x = fct_infreq(sentiment),
+             fill = sentiment)) +
   geom_bar() +
-  coord_flip()
+  coord_flip() +
+  labs(x = "Number of words",
+       y = "Emotion") +
+  scale_fill_brewer(palette = "Spectral")
 ```
 
 As per figure \@ref(fig:critic-word-categories), most wordsused in critics reviews are positive, and resonate the emotions of trust, anticipation and joy. A very few words used in reviews resonate the emotions of disgust, fear and anger, concluding an overall positive response from critics on the Animal Crossing game.
@@ -405,7 +419,9 @@ The scores given by the criitcs range from 0-100, 0 being the lowest and 100 bei
 ```{r critics-score-distribution, fig.cap="The distribution of critics scores on Animal Crossing- New Horizon"}
 critics %>%
   ggplot(aes(x = grade)) +
-  geom_bar()
+  geom_bar() +
+  labs(x = "Critic review score",
+       y = "Number of reviews")
 ```
 
 It's interesting how all scores are above 70, while most of them are above 90. Comparing figure \@ref(fig:user-review-scores) and figure \@ref(fig:critics-score-distribution), the critics seem impressed with the game while the users have mixed reviews.
