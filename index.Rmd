@@ -11,13 +11,14 @@ output:
 ---
 
 ```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center")
 library(tidyverse)
 library(readr)
 library(kableExtra)
 library(visdat)
 library(tidytext)
 library(wordcloud)
+set.seed(5521.2020)
 ```
 
 [This assignment is for ETC5521 Assignment 1 by Team `r rmarkdown::metadata$team` comprising of `r knitr::combine_words(rmarkdown::metadata$author)`.]{style="color:#006DAE;"}
@@ -260,8 +261,7 @@ user_reviews %>%
   scale_x_date(date_breaks = "1 week")
 ```
 
-The astounding reception of Animal Crossing: New Horizons since its world release on the 20th of March 2020 is justified by the number of daily user reviews it has received. However Figure \@ref(fig:user-review-trend) shows a huge spike in the number of reviews on the 24th of March 2020, lasting till about the 26th of March 2020, and another smaller spike around the 28th of April 2020.
-
+The astounding reception of Animal Crossing: New Horizons since its world release on the 20th of March 2020 is justified by the number of daily user reviews it has received. However Figure \@ref(fig:user-review-trend) shows a huge spike in the number of reviews on the 24th of March 2020, lasting till about the 26th of March 2020, which may be attributed to the world release of the game on the 20th of March 2020. The number of reviews there after remain consistent other than another smaller spike around the 28th of April 2020.
 
 Figure \@ref(fig:user-review-wordcloud) shows the most common words in the user reviews for the game. The words 'game', 'island', 'switch' and 'play' are the most common words in the user reviews and doesn't show a direct positive or negative significance based on them.
 
@@ -275,7 +275,6 @@ user_review_word_freq <- user_review_words %>%
   summarise(freq = n()) %>%
   arrange(desc(freq)) 
 
-set.seed(5521.2020)
 wordcloud(words = user_review_word_freq$word,
           freq = user_review_word_freq$freq,
           min.freq = 1,
@@ -287,7 +286,7 @@ wordcloud(words = user_review_word_freq$word,
 
 The user reviews also includes a score from 0-10, where 0 is the lowest and 10 is the highest. Figure \@ref(fig:user-review-scores) is a plot of the disctribution of scores ranging from 0-10.
 
-```{r user-review-scores, fig.cap="Distribution of review scores on Animal Crossing: New Horizons"}
+```{r user-review-scores, fig.cap="Distribution of user review scores on Animal Crossing: New Horizons"}
 user_reviews %>%
   ggplot(aes(x=grade)) +
   geom_bar()
@@ -295,7 +294,9 @@ user_reviews %>%
 
 Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scroing the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
 
-A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment. Figure \@ref(fig:user-review-sentiments) is a boxplot summarizing the sentiment scores of all `r nrow(user_reviews)` from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
+A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment.
+
+Figure \@ref(fig:user-review-sentiments) is a boxplot summarizing the sentiment scores of all `r nrow(user_reviews)` from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
 
 ```{r user-review-sentiments, fig.cap="Summary of sentiments of user-reviews"}
 afinn <- get_sentiments("afinn")
@@ -325,21 +326,89 @@ user_review_sentiments %>%
 The distribution of points over the plot signifies no clear relationship among the sentiments of the review text and score.
 
 
-```{r}
-library(lubridate)
+## What do the critics say?
 
-user_reviews %>%
-  group_by(week = floor_date(date, "week")) %>%
-  summarize(count = n(),
-            avg_grade = mean(grade)) %>%
-  ggplot(aes(week, avg_grade)) +
+In the analysis of reviews made by critics, reviews published by `r nrow(critics)` critics such as Forbes, Telegraph and Nintendo Life from `r min(critics$date)` - `r max(critics$date)` are used.
+
+```{r critic-review-trend, fig.cap="Trend of critic reviews"}
+critics %>%
+  group_by(date) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x=date,
+             y=count)) +
   geom_line() +
-  geom_point(aes(size = count)) +
-  labs(x = "Date",
-       y = "Weekly average rating",
-       Size = "Number of reviews")
-
+  scale_x_date(date_breaks = "1 week")
 ```
+
+Figure \@ref(fig:critic-review-trend) represents the trend in the number of critic reviews over time. Most critics have reviewed the game on the 16th of March, just before the world release of the game, while a smaller number of critics have made reviews in the days following that.
+
+Since critics have the ability to influence people through their comments, it might be interesting to see the most used positive and negative words in their reviews.
+
+```{r critic-positive-wordcloud, fig.cap="The most used positive words by the critics"}
+
+bing <- get_sentiments("bing")
+
+critic_words <- critics %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words, by="word") 
+
+critic_word_freq <- critic_words %>%
+  group_by(word) %>%
+  summarise(freq = n()) %>%
+  arrange(desc(freq)) %>%
+  inner_join(bing, by = "word")
+
+wordcloud(words = (critic_word_freq %>% filter(sentiment == "positive"))$word,
+          freq = (critic_word_freq %>% filter(sentiment == "positive"))$freq,
+          min.freq = 1,
+          max.words=100,
+          random.order=FALSE,
+          rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+```
+
+```{r critic-negative-wordcloud, fig.cap="The most used negative words by the critics"}
+
+wordcloud(words = (critic_word_freq %>% filter(sentiment == "negative"))$word,
+          freq = (critic_word_freq %>% filter(sentiment == "negative"))$freq,
+          min.freq = 1,
+          max.words=100,
+          random.order=FALSE,
+          rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+```
+
+Figure \@ref(fig:critic-positive-wordcloud) shows the most used positive words in the critic reviews while figure \@ref(fig:critic-negative-wordcloud) shows the most negative words used. By direct observation of the two word clouds, the positivity seems to overpower the negativity in the critics reviews.
+
+Figure \@ref(fig:critic-word-categories) is a further breakdown of the words used by critics in their reviews, based on eight basic emotions.
+
+```{r critic-word-categories, fig.cap="Breakd down of words used by critics into different emotional categories"}
+nrc <- get_sentiments("nrc")
+
+critic_word_sent_category <- critic_words %>%
+  group_by(word) %>%
+  summarise(freq = n()) %>%
+  arrange(desc(freq)) %>%
+  inner_join(nrc, by = "word")
+
+critic_word_sent_category %>%
+  ggplot(aes(x = fct_infreq(sentiment))) +
+  geom_bar() +
+  coord_flip()
+```
+
+As per figure \@ref(fig:critic-word-categories), most wordsused in critics reviews are positive, and resonate the emotions of trust, anticipation and joy. A very few words used in reviews resonate the emotions of disgust, fear and anger, concluding an overall positive response from critics on the Animal Crossing game.
+
+
+The scores given by the criitcs range from 0-100, 0 being the lowest and 100 being the highest. Figure \@ref(fig:critics-score-distribution) shows the disribution of these scores over critics reviews.
+
+```{r critics-score-distribution, fig.cap="The distribution of critics scores on Animal Crossing- New Horizon"}
+critics %>%
+  ggplot(aes(x = grade)) +
+  geom_bar()
+```
+
+It's interesting how all scores are above 70, while most of them are above 90. Comparing figure \@ref(fig:user-review-scores) and figure \@ref(fig:critics-score-distribution), the critics seem impressed with the game while the users have mixed reviews.
 
 
 # References
