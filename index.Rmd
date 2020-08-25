@@ -144,6 +144,7 @@ Graph_spe
 
 Base on the analysis, we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
 
+[`r knitr::include_graphics("Images/villagers.png")`]{style="align:right;"}
 
 ### analysis the personality of villagers
 ```{r analysis personality}
@@ -161,13 +162,13 @@ dat2 <- villagers%>%
 Graph_per<- dat2 %>%
   ggplot(aes(x =reorder(personality,-per), y = per, fill = personality))+
   geom_bar(stat = "identity", show.legend = FALSE)+
-  ggtitle("Analysis the different species of villagers")+
+  ggtitle("Analysis the different personality of villagers")+
   theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
   labs(x = "personality" , y = "per")+
    geom_text(aes(label=per),position = position_stack(vjust=1.1))
 Graph_per
 ```
-
+Accounding to the analysis,we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game
 
 
 # References
