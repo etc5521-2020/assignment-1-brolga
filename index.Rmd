@@ -12,10 +12,12 @@ output:
 
 ```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
-library("tidyverse")
-library("readr")
-library("kableExtra")
-library("visdat")
+library(tidyverse)
+library(readr)
+library(kableExtra)
+library(visdat)
+library(tidytext)
+library(wordcloud)
 ```
 
 [This assignment is for ETC5521 Assignment 1 by Team `r rmarkdown::metadata$team` comprising of `r knitr::combine_words(rmarkdown::metadata$author)`.]{style="color:#006DAE;"}
@@ -42,6 +44,8 @@ villagers <- read_csv("Data/villagers.csv")
 Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since it's inception the game has had an astounding world-wide reception With over 22 million copies of the game being sold in just 5 months.
 
 In the animal crossing world a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called villagers in the animal crossing world, have their own name, gender, birthday, personality, favourite song and their own catchprhase. The items used in performing different tasks in the animal crossing belong to different categories and are also priced at different buying and selling values.
+
+The game also simulates day and night based on a 24 hour clock, and has different animals and insects appearing at specific times of day or night. The level of detail in the design of the Animal Crossing world has attracted many users playing throughout the day.
 
 Although it has been 5 only months since the game was released worldwide, it has been gaining alot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
 
@@ -241,51 +245,85 @@ items %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-```{r review-trend}
-all_reviews <- rbind(
-  user_reviews %>%
-    rename(name = "user_name") %>%
-    mutate("review_type" = "users"),
-  critics %>%
-    rename(name = "publication") %>%
-    mutate("review_type" = "critics")
-)
+## What do the users say?
 
-all_reviews %>%
-  group_by(review_type, date) %>%
+
+Figure \@ref(fig:user-review-trend) is a plot of the trend of user reviews on Metacritic from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
+
+```{r user-review-trend, fig.cap="Trend of user reviews"}
+user_reviews %>%
+  group_by(date) %>%
   summarise(count = n()) %>%
-  ggplot(aes(x = date,
-             y = count,
-             color = review_type)) +
-  geom_line()
+  ggplot(aes(x=date,
+             y=count)) +
+  geom_line() +
+  scale_x_date(date_breaks = "1 week")
 ```
 
-```{r}
-  
-library(tidytext)
-library(wordcloud)
+The astounding reception of Animal Crossing: New Horizons since its world release on the 20th of March 2020 is justified by the number of daily user reviews it has received. However Figure \@ref(fig:user-review-trend) shows a huge spike in the number of reviews on the 24th of March 2020, lasting till about the 26th of March 2020, and another smaller spike around the 28th of April 2020.
 
 
-user_reviews$text <- sub("^\\s*<U\\+\\w+>\\s*", "", user_reviews$text)
+Figure \@ref(fig:user-review-wordcloud) shows the most common words in the user reviews for the game. The words 'game', 'island', 'switch' and 'play' are the most common words in the user reviews and doesn't show a direct positive or negative significance based on them.
 
-user_reviews_words <- user_reviews %>%
+```{r user-review-wordcloud, fig.cap="The most used words in the user reviews"}
+user_review_words <- user_reviews %>%
   unnest_tokens(word, text) %>%
-  # removing stop words
-  anti_join(stop_words, by="word") %>%
+  anti_join(stop_words, by="word") 
+
+user_review_word_freq <- user_review_words %>%
   group_by(word) %>%
   summarise(freq = n()) %>%
-  arrange(desc(freq))
+  arrange(desc(freq)) 
 
 set.seed(5521.2020)
-wordcloud(words = user_reviews_words$word,
-          freq = user_reviews_words$freq,
+wordcloud(words = user_review_word_freq$word,
+          freq = user_review_word_freq$freq,
           min.freq = 1,
           max.words=100,
           random.order=FALSE,
           rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
-
 ```
+
+The user reviews also includes a score from 0-10, where 0 is the lowest and 10 is the highest. Figure \@ref(fig:user-review-scores) is a plot of the disctribution of scores ranging from 0-10.
+
+```{r user-review-scores, fig.cap="Distribution of review scores on Animal Crossing: New Horizons"}
+user_reviews %>%
+  ggplot(aes(x=grade)) +
+  geom_bar()
+```
+
+Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scroing the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
+
+A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment. Figure \@ref(fig:user-review-sentiments) is a boxplot summarizing the sentiment scores of all `r nrow(user_reviews)` from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
+
+```{r user-review-sentiments, fig.cap="Summary of sentiments of user-reviews"}
+afinn <- get_sentiments("afinn")
+
+user_review_sentiments <- user_review_words %>%
+  inner_join(afinn, by = "word") %>%
+  group_by(user_name, date, grade) %>%
+  summarise(mean_sent = mean(value))
+
+user_review_sentiments %>%
+  ungroup() %>%
+  ggplot(aes(x = mean_sent)) +
+  geom_boxplot()
+```
+
+The boxplot in figure \@ref(fig:user-review-sentiments) states that the overall sentiment of the user reviews to be just slightly positive at 0.4, which is surprising as it would've been expected to be much higher with the recent popularity it has gotten. Most of the sentiments of the reviews also lie within a range of -1 to +1, which may indicate to us that Animal crossing isn't enjoyed by all and there are as many users dissatisfied by the game or disliking the game as those enjoying it.
+
+The mean sentiment score of each review against its review score is plotted in figure \@ref(fig:user-review-score-vs-sentiment).
+
+```{r user-review-score-vs-sentiment, fig.cap="Mean sentiment score of reviews against its review score"}
+user_review_sentiments %>%
+  ggplot(aes(x = mean_sent,
+             y = grade)) +
+  geom_point()
+```
+
+The distribution of points over the plot signifies no clear relationship among the sentiments of the review text and score.
+
 
 ```{r}
 library(lubridate)
