@@ -111,7 +111,9 @@ data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The sou
 # Section:analysis game mode
 Anmials crossing as a hot shell games, the ways of paly the game is unique.Now, we will do some research of the unique villagers system.
 
-NPC,which is non-player character.It is an essential part of every game, which can guide the player how to play the game better.but,in anmials crossing,NPC become villagers,They will not only teach you to play games, but also accompany you in your live in the game world. 
+NPC,which is non-player character.It is an essential part of every game, which can guide the player how to play the game better.but,in anmials crossing,NPC become villagers,They will not only teach you to play games, but also accompany you in your live in the game world. There are 381 different types of villagers in the game.
+
+### analysis the species of villagers
 ```{r analysis species}
 dat <- villagers%>%
   select(species)%>%
@@ -130,40 +132,41 @@ dat <- villagers%>%
  
  
 ```{r graph of species}
-Graph<- dat %>%
+Graph_spe<- dat %>%
   ggplot(aes(x =reorder(species,-prop), y = prop, fill = species))+
   geom_bar(stat = "identity", show.legend = FALSE)+
   ggtitle("Analysis the different species of villagers")+
   theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
   labs(x = "species" , y = "prop")+
    geom_text(aes(label=prop),position = position_stack(vjust=1.1))
-Graph
+Graph_spe
 ```
 
 Base on the analysis, we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
 
 
-
-
-
-
-
-
+### analysis the personality of villagers
 ```{r analysis personality}
-dat <- villagers%>%
+dat2 <- villagers%>%
   select(personality)%>%
   group_by(personality)%>%
   mutate(case=n())%>%
-  mutate(prop = round(n()/381*100))%>%
+  mutate(per = round(n()/381*100))%>%
   arrange(-case)%>%
   unique()
-
-print(dat)
-
 ```
 
 
-
+```{r graph of personality}
+Graph_per<- dat2 %>%
+  ggplot(aes(x =reorder(personality,-per), y = per, fill = personality))+
+  geom_bar(stat = "identity", show.legend = FALSE)+
+  ggtitle("Analysis the different species of villagers")+
+  theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
+  labs(x = "personality" , y = "per")+
+   geom_text(aes(label=per),position = position_stack(vjust=1.1))
+Graph_per
+```
 
 
 
