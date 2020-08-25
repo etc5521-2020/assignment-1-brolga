@@ -7,7 +7,7 @@ author:
   - Diyao Chen
 date: "`r Sys.Date()`"
 output: 
-  html_document
+  bookdown::html_document2
 ---
 
 ```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
@@ -56,13 +56,13 @@ Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided 
 * What are the most common star signs of the villagers based on their birthdates?  
 * What are the different categories of items available in the Animal Crossing world?  
 * What are the cheapest and most expensive items available?
-* How can players maximize their profits by buying and selling items?
-* Where can players find items and in what time periods?
+* How can players maximize their profits by buying and re-selling items?
 
-**The view of the players and critics about Animal Crossing**
+**What are players and critics saying about Animal Crossing?**
 
-* What are the most common words users and critics use to describe Animal Crossing?  
+
 * What is the trend of user and critic reviews on the Animal Crossing game?  
+* What are the most common words users and critics use to describe Animal Crossing?  
 * What are the sentiments and emotions portrayed by the users and critics reviews?  
 
 
@@ -122,13 +122,15 @@ data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The sou
 # Data Exploration and Wrangling
 
 
-### Visualising Missing Values
+## Handling Missing Values
 
 ```{r}
 vis_miss(items)
 ```
 
-### Currency conversion
+The columns with over 80% missing values were dropped from the analysis due to the inabiility to impute values accurately.
+
+## Currency conversion
 
 The buying and selling currencies of items in the animal crossing world were expressed in two currencies; Bells and Miles. For simplification of the analysis all buying and selling prices were converted into Bells.
 
@@ -158,12 +160,148 @@ items <- items %>%
 
 [FILL] Should include at least one plot or numerical summary for each of your questions, that helps the reader arrive at an answer. You should also write paragraphs describing the methods, summaries and findings.
 
-```{r}
+## An analysis of the villagers in the Animal Crossing World
+
+
+The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favourite song and unique catch phrase.
+
+Figure \@ref(fig:count-species-villagers) is a plot of the villagers in the Animal Crossing world belonging to each species and gender category.
+
+```{r count-species-villagers, fig.cap="The number of villagers belonging to each species"}
 villagers %>%
-  ggplot(aes(x = species,
+  ggplot(aes(x = fct_infreq(species),
              fill = gender)) +
   geom_bar() +
-  coord_flip()
+  coord_flip() +
+  labs(y = "Number of Villagers",
+       x = "Species")
 ```
+
+As visualised in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octupuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
+
+
+
+
+## An analysis of the Items in the Animal Crossing World
+
+```{r item-categories}
+items %>%
+  ggplot(aes(x = fct_infreq(category))) +
+  geom_bar(aes(fill = category)) +
+  labs(title="Number of Items belonging to each category",
+       x = "Item Category",
+       y = "Number of Items") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = "none")
+```
+
+```{r price-distribution-over-categories, eval=FALSE}
+items %>%
+  group_by(category) %>%
+  summarise(med_buy_price = mean(buy_value, na.rm = TRUE),
+            med_sell_price = mean(sell_value, na.rm = TRUE)) %>%
+  pivot_longer(cols = c("med_buy_price", "med_sell_price"),
+               names_to = "measure",
+               values_to = "value") %>%
+  ggplot(aes(x = value, y = category)) +
+  geom_point(aes(color = measure)) +
+  scale_fill_manual(values=c("#F8766D", "#00BA38"))
+
+
+
+  pivot_longer(cols = c(sell_value,buy_value),
+               names_to = "type",
+               values_to = "value") %>%
+  ggplot(aes(x=category,
+             y=value,
+             color = category)) +
+  geom_point() +
+  facet_wrap(~ type, nrow = 1) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = "none")
+  
+items %>%
+  filter(category == "Fossils" & !is.na(buy_value)) %>%
+  select(buy_value)
+```
+
+Buying prices of Fish and Fossils were not available
+
+```{r}
+items %>%
+  mutate("Profit" = sell_value - buy_value,
+         "Selling Price" = paste0(sell_value," ",sell_currency),
+         "Buying Price" = paste0(buy_value," ",buy_currency)) %>%
+  filter(Profit > 0) %>%
+  arrange(desc(Profit)) %>%
+  rename("Name" = name,
+         "Category" = category) %>%
+  select(Name, Category, "Selling Price", "Buying Price", Profit) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r review-trend}
+all_reviews <- rbind(
+  user_reviews %>%
+    rename(name = "user_name") %>%
+    mutate("review_type" = "users"),
+  critics %>%
+    rename(name = "publication") %>%
+    mutate("review_type" = "critics")
+)
+
+all_reviews %>%
+  group_by(review_type, date) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = date,
+             y = count,
+             color = review_type)) +
+  geom_line()
+```
+
+```{r}
+  
+library(tidytext)
+library(wordcloud)
+
+
+user_reviews$text <- sub("^\\s*<U\\+\\w+>\\s*", "", user_reviews$text)
+
+user_reviews_words <- user_reviews %>%
+  unnest_tokens(word, text) %>%
+  # removing stop words
+  anti_join(stop_words, by="word") %>%
+  group_by(word) %>%
+  summarise(freq = n()) %>%
+  arrange(desc(freq))
+
+set.seed(5521.2020)
+wordcloud(words = user_reviews_words$word,
+          freq = user_reviews_words$freq,
+          min.freq = 1,
+          max.words=100,
+          random.order=FALSE,
+          rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
+```
+
+```{r}
+library(lubridate)
+
+user_reviews %>%
+  group_by(week = floor_date(date, "week")) %>%
+  summarize(count = n(),
+            avg_grade = mean(grade)) %>%
+  ggplot(aes(week, avg_grade)) +
+  geom_line() +
+  geom_point(aes(size = count)) +
+  labs(x = "Date",
+       y = "Weekly average rating",
+       Size = "Number of reviews")
+
+```
+
 
 # References
