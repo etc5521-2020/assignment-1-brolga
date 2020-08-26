@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library("tidyverse")
 library("readr")
 library("kableExtra")
+library(lubridate)
 ```
 
 [This assignment is for ETC5521 Assignment 1 by Team `r rmarkdown::metadata$team` comprising of `r knitr::combine_words(rmarkdown::metadata$author)`.]{style="color:#006DAE;"}
@@ -142,7 +143,7 @@ Graph_spe<- dat %>%
 Graph_spe
 ```
 
-Base on the analysis, we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
+Base on the analysis, we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing,which is cat 6%,rabbit 5%,squirrel 5%.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
 
 [`r knitr::include_graphics("Images/villagers.png")`]{style="align:right;"}
 
@@ -167,8 +168,28 @@ Graph_per<- dat2 %>%
   labs(x = "personality" , y = "per")+
    geom_text(aes(label=per),position = position_stack(vjust=1.1))
 Graph_per
+print(villagers)
 ```
-Accounding to the analysis,we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game
+Accounding to the analysis,we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game.
 
+```{r}
+dat3 <- villagers %>%
+  select(birthday,name)%>%
+  mutate(birth_day = str_split(birthday,"-")) %>%
+  unnest_wider(birth_day) %>%
+  rename("birth_month" = ...1,
+         "birth_date" = ...2)
 
+dat4 <- dat3%>%
+  select(birth_month)%>%
+  group_by(birth_month)%>%
+  mutate(case=n())%>%
+  arrange(-case)%>%
+  unique()
+
+ knitr::kable(head(dat4,10),
+  caption = "villagers birthday month analysis") %>% 
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+```
 # References
