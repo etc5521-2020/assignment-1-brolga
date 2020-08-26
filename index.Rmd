@@ -44,15 +44,15 @@ villagers <- read_csv("Data/villagers.csv")
 
 # Introduction and motivation
 
-[`r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`]
+`r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`
 
 Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since it's inception the game has had an astounding world-wide reception With over 22 million copies of the game being sold in just 5 months.
 
-In the animal crossing world a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called villagers in the animal crossing world, have their own name, gender, birthday, personality, favourite song and their own catchprhase. The items used in performing different tasks in the animal crossing belong to different categories and are also priced at different buying and selling values.
+In the animal crossing world a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called villagers in the animal crossing world, have their own name, gender, birthday, personality, favorite song and their own catchphrase. The items used in performing different tasks in the animal crossing belong to different categories and are also priced at different buying and selling values.
 
 The game also simulates day and night based on a 24 hour clock, and has different animals and insects appearing at specific times of day or night. The level of detail in the design of the Animal Crossing world has attracted many users playing throughout the day.
 
-Although it has been 5 only months since the game was released worldwide, it has been gaining alot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
+Although it has been 5 only months since the game was released worldwide, it has been gaining a lot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
 
 The motivation for choosing Animal Crossing for the analysis is to attempt to understand the reason for the immense popularity of the game using user and critic reviews and features within the game (such as the villagers and the items).
 
@@ -77,11 +77,11 @@ Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided 
 
 # Data description
 
-The dataset used for this analysis was retreived from [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a project aimed at allowing individuals to practice their data wrangling and visualization skills through the use of real-world data sets.
+The dataset used for this analysis was retrieved from [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a project aimed at allowing individuals to practice their data wrangling and visualization skills through the use of real-world data sets.
 
-The retreived dataset consisted of four sub-datasets; 'villagers' and 'items' datasets containing data about in-game characters and items, and 'user reviews' and 'critic reviews' datasets contatining data about user and critics reviews on the game.
+The retrieved dataset consisted of four sub-datasets; 'villagers' and 'items' datasets containing data about in-game characters and items, and 'user reviews' and 'critic reviews' datasets containing data about user and critics reviews on the game.
 
-The 'villagers' and 'items' datasets have been originally retreived from [VillagerDB](https://github.com/jefflomacy/villagerdb), which is a project aimed at making data about Animal Crossing available and easily accessible, while the user and critic reviews have been originally retreived by scraping the [Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/critic-reviews) website.
+The 'villagers' and 'items' datasets have been originally retrieved from [VillagerDB](https://github.com/jefflomacy/villagerdb), which is a project aimed at making data about Animal Crossing available and easily accessible, while the user and critic reviews have been originally retrieved by scraping the [Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/critic-reviews) website.
 
 ### Data dictionary
 
@@ -137,7 +137,7 @@ data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The sou
 vis_miss(items)
 ```
 
-It's interesting how the buying value of22.21% of the items are missing. In order to analyse this further, the percentages of missing buying values of each item category was calculated.
+It's interesting how the buying value of 22.21% of the items are missing. In order to analyse this further, the percentages of missing buying values of each item category was calculated.
 
 ```{r miss-buy-values-category, fig.cap="Percentage of missing buying values in each category of items"}
 ggplotly(
@@ -155,15 +155,15 @@ items %>%
 
 Figure \@ref(fig:miss-buy-values-category) states that all buying values of fish, fossils and seashells are missing. 
 
-Further research claimed that fish, fossils and seashells can not be bought, which explains the missing buying values. A blog on Animal Crossing states that fish can only be acquired by fishing and can not be bought @FISH. Further, a fan page on Animal Crossing states that fossils can be dug up and seashells collected @FOSSIL. The rest of the missing buying values too were attributed to be due to the inability to purchase the items in the Animal Crossing World.
+Further research claimed that fish, fossils and seashells can not be bought, which explains the missing buying values. A blog on Animal Crossing states that fish can only be acquired by fishing and can not be bought @FISH. Further, a fan page on Animal Crossing states that fossils can only be dug up and seashells can be collected @FOSSIL. The rest of the missing buying values too were attributed to be due to the inability to purchase the items in the Animal Crossing World.
 
-The columns with over 80% missing values were dropped from the analysis due to the inabiility to impute values accurately.
+The columns with over 80% missing values were dropped from the analysis due to the inability to impute values accurately. This did not impact the analysis due to the independence of each of the dropped variables from the rest.
 
 ## Currency conversion
 
-The buying and selling currencies of items in the animal crossing world were expressed in two currencies; Bells and Miles. For simplification of the analysis all buying and selling prices were converted into Bells.
+The buying and selling values of items in the animal crossing world were expressed in two currencies; Bells and Miles. For simplification of the analysis all buying and selling prices were converted into Bells.
 
-[The Nintendo guides](https://www.nintendolife.com/guides/animal-crossing-new-horizons-bells-how-to-make-bells-fast-nook-miles-and-money-explained#exchange-a-bell-voucher-500-nook-miles-for-3000-bells) states that a Bell Voucher can be bought for 500 Nook Miles, which can thereafter be exchanged for 3000 Bells in the Animal Crossing world . Therefore it was assumed that each Mile equated to 6 Miles in the currency convesion.
+[The Nintendo guides](https://www.nintendolife.com/guides/animal-crossing-new-horizons-bells-how-to-make-bells-fast-nook-miles-and-money-explained#exchange-a-bell-voucher-500-nook-miles-for-3000-bells) states that a Bell Voucher can be bought for 500 Nook Miles, which can thereafter be exchanged for 3000 Bells in the Animal Crossing world . Therefore it was assumed that each Mile equated to 6 Miles in the currency conversion.
 
 ```{r currency-conversion}
 items <- items %>%
@@ -187,12 +187,11 @@ items <- items %>%
 
 # Analysis and findings
 
-[FILL] Should include at least one plot or numerical summary for each of your questions, that helps the reader arrive at an answer. You should also write paragraphs describing the methods, summaries and findings.
 
 ## An analysis of the villagers in the Animal Crossing World
 
 
-The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favourite song and unique catch phrase.
+The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favorite song and unique catch phrase.
 
 Figure \@ref(fig:count-species-villagers) is a plot of the villagers in the Animal Crossing world belonging to each species and gender category.
 
@@ -206,7 +205,7 @@ villagers %>%
        x = "Species")
 ```
 
-As visualised in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octupuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
+As visualized in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octopuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
 
 
 
@@ -292,7 +291,7 @@ ggplotly(
 
 The astounding reception of Animal Crossing: New Horizons since its world release on the 20th of March 2020 is justified by the number of daily user reviews it has received. Figure \@ref(fig:user-review-trend) shows a huge spike in the number of reviews on the 24th of March 2020, lasting till about the 26th of March 2020, which may be attributed to the world release of the game on the 20th of March 2020. The number of reviews there after remain consistent other than another smaller spike around the 28th of April 2020.
 
-Figure \@ref(fig:user-review-wordcloud) shows the most common words in the user reviews for the game. The words 'game', 'island', 'switch' and 'play' are the most common words in the user reviews and doesn't show a direct positive or negative significance based on them.
+Figure \@ref(fig:user-review-wordcloud) shows the most common words in the user reviews for the game. The words 'game', 'island', 'switch' and 'play' are the most common words used in the reviews and a direct positive or negative significance can not be obtained based on them.
 
 ```{r user-review-wordcloud, fig.cap="The most used words in the user reviews"}
 user_review_words <- user_reviews %>%
@@ -313,7 +312,7 @@ wordcloud(words = user_review_word_freq$word,
           colors=brewer.pal(8, "Dark2"))
 ```
 
-The user reviews also includes a score from 0-10, where 0 is the lowest and 10 is the highest. Figure \@ref(fig:user-review-scores) is a plot of the disctribution of scores ranging from 0-10.
+The user reviews also includes a score from 0-10, where 0 is the lowest and 10 is the highest. Figure \@ref(fig:user-review-scores) is a plot of the distribution of scores ranging from 0-10.
 
 ```{r user-review-scores, fig.cap="Distribution of user review scores on Animal Crossing: New Horizons"}
 ggplotly(
@@ -326,7 +325,7 @@ user_reviews %>%
 )
 ```
 
-Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scroing the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
+Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scoring the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
 
 A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment.
 
@@ -450,7 +449,7 @@ critic_word_sent_category %>%
 As per figure \@ref(fig:critic-word-categories), most words used in critics reviews are positive, and resonate the emotions of trust, anticipation and joy. A very few words used in reviews resonate the emotions of disgust, fear and anger, concluding an overall positive response from critics on the Animal Crossing game.
 
 
-The scores given by the criitcs range from 0-100, 0 being the lowest and 100 being the highest. Figure \@ref(fig:critics-score-distribution) shows the disribution of these scores over critics reviews.
+The scores given by the critics range from 0-100, 0 being the lowest and 100 being the highest. Figure \@ref(fig:critics-score-distribution) shows the distribution of these scores over critics reviews.
 
 ```{r critics-score-distribution, fig.cap="The distribution of critics scores on Animal Crossing- New Horizon"}
 ggplotly(
