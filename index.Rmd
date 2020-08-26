@@ -143,7 +143,7 @@ Graph_spe<- dat %>%
 Graph_spe
 ```
 
-Base on the analysis, we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing,which is cat 6%,rabbit 5%,squirrel 5%.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
+Base on the analysis(/@tab:analysis species)(/@fig:graph of species), we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing,which is cat 6%,rabbit 5%,squirrel 5%.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
 
 [`r knitr::include_graphics("Images/villagers.png")`]{style="align:right;"}
 
@@ -168,11 +168,12 @@ Graph_per<- dat2 %>%
   labs(x = "personality" , y = "per")+
    geom_text(aes(label=per),position = position_stack(vjust=1.1))
 Graph_per
-print(villagers)
-```
-Accounding to the analysis,we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game.
 
-```{r}
+```
+Accounding to the analysis(/@fig:graph of personality), we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game.
+
+### What are the most common star signs of the villagers based on their birthdates?
+```{r birthday}
 dat3 <- villagers %>%
   select(birthday,name)%>%
   mutate(birth_day = str_split(birthday,"-")) %>%
@@ -190,6 +191,12 @@ dat4 <- dat3%>%
  knitr::kable(head(dat4,10),
   caption = "villagers birthday month analysis") %>% 
   kable_styling(latex_options = c("striped", "hold_position"))
-
 ```
+
+Base on the analysis(/@tab:birthday)Most villager have birthdays in October,the second is August. So, the most common star signs is libra.
+
+
+
+
+
 # References
