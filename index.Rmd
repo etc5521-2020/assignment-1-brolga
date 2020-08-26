@@ -9,6 +9,7 @@ date: "`r Sys.Date()`"
 output: 
   bookdown::html_document2
 bibliography: references.bib
+nocite: '@*'
 ---
 
 ```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
@@ -18,6 +19,7 @@ library(readr)
 library(kableExtra)
 library(visdat)
 library(tidytext)
+library(ggplot2)
 library(wordcloud)
 library(plotly)
 set.seed(5521.2020)
@@ -42,7 +44,7 @@ villagers <- read_csv("Data/villagers.csv")
 
 # Introduction and motivation
 
-[`r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`]{style="align:right;"}
+[`r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`]
 
 Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since it's inception the game has had an astounding world-wide reception With over 22 million copies of the game being sold in just 5 months.
 
@@ -463,9 +465,7 @@ critics %>%
 
 It's interesting how a significant percentage of the reviews score the game above 90, while all of the scores are above 70. Comparing figure \@ref(fig:user-review-scores) and figure \@ref(fig:critics-score-distribution), all the critics seem impressed with the game while the users have mixed reviews.
 
-brewer.pal(n = 8, name = "Spectral")
-[1] "#D53E4F" "#F46D43" "#FDAE61" "#FEE08B" "#E6F598" "#ABDDA4" "#66C2A5" "#3288BD"
-
-
 
 # References
+
+
