@@ -278,6 +278,8 @@ Base on the analysis(/@tab:birthday)Most villager have birthdays in October,the 
 
 The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favorite song and unique catch phrase.
 
+Figure \@ref(fig:count-species-villagers) is a plot of the villagers in the Animal Crossing world belonging to each species and gender category.
+
 ```{r count-species-villagers, fig.cap="The number of villagers belonging to each species"}
 villagers %>%
   ggplot(aes(x = fct_infreq(species),
@@ -289,7 +291,6 @@ villagers %>%
 ```
 
 As visualized in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octopuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
-
 
 
 ## An analysis of the Items in the Animal Crossing World
@@ -353,6 +354,7 @@ items %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
+
 
 ## What do the users say?
 
@@ -448,7 +450,6 @@ ggplotly(
 ```
 
 The distribution of points over the plot signifies no clear relationship among the sentiments of the review text and score.
-
 
 ## What do the critics say?
 
@@ -551,3 +552,5 @@ It's interesting how a significant percentage of the reviews score the game abov
 
 
 # References
+
+
