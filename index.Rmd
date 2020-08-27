@@ -188,7 +188,9 @@ items <- items %>%
 # Analysis and findings
 
 
-# Section:analysis game mode
+## An analysis of the villagers in the Animal Crossing World
+
+
 Anmials crossing as a hot shell games, the ways of paly the game is unique.Now, we will do some research of the unique villagers system.
 
 NPC,which is non-player character.It is an essential part of every game, which can guide the player how to play the game better.but,in anmials crossing,NPC become villagers,They will not only teach you to play games, but also accompany you in your live in the game world. There are 381 different types of villagers in the game.
@@ -204,15 +206,26 @@ dat <- villagers%>%
   arrange(-case)%>%
   unique()
 
-
-
-
  knitr::kable(head(dat,10),
   caption = "Table. Ranking of villagers species") %>% 
   kable_styling(latex_options = c("striped", "hold_position"))
 
 ```
- The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favorite song and unique catch phrase.
+
+Base on the analysis(/@tab:analysis species)(/@fig:graph of species), we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing,which is cat 6%,rabbit 5%,squirrel 5%.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
+
+[`r knitr::include_graphics("Images/villagers.png")`]{style="align:right;"}
+
+### analysis the personality of villagers
+```{r analysis personality}
+dat2 <- villagers%>%
+  select(personality)%>%
+  group_by(personality)%>%
+  mutate(case=n())%>%
+  mutate(per = round(n()/381*100))%>%
+  arrange(-case)%>%
+  unique()
+```
 
  
 ```{r graph of species}
@@ -225,6 +238,46 @@ Graph_spe<- dat %>%
    geom_text(aes(label=prop),position = position_stack(vjust=1.1))
 Graph_spe
 ```
+
+```{r graph of personality}
+Graph_per<- dat2 %>%
+  ggplot(aes(x =reorder(personality,-per), y = per, fill = personality))+
+  geom_bar(stat = "identity", show.legend = FALSE)+
+  ggtitle("Analysis the different personality of villagers")+
+  theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
+  labs(x = "personality" , y = "per")+
+   geom_text(aes(label=per),position = position_stack(vjust=1.1))
+Graph_per
+
+```
+Accounding to the analysis(/@fig:graph of personality), we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game.
+
+### What are the most common star signs of the villagers based on their birthdates?
+```{r birthday}
+dat3 <- villagers %>%
+  select(birthday,name)%>%
+  mutate(birth_day = str_split(birthday,"-")) %>%
+  unnest_wider(birth_day) %>%
+  rename("birth_month" = ...1,
+         "birth_date" = ...2)
+
+dat4 <- dat3%>%
+  select(birth_month)%>%
+  group_by(birth_month)%>%
+  mutate(case=n())%>%
+  arrange(-case)%>%
+  unique()
+
+ knitr::kable(head(dat4,10),
+  caption = "villagers birthday month analysis") %>% 
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+
+Base on the analysis(/@tab:birthday)Most villager have birthdays in October,the second is August. So, the most common star signs is libra.
+
+The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favorite song and unique catch phrase.
+
 ```{r count-species-villagers, fig.cap="The number of villagers belonging to each species"}
 villagers %>%
   ggplot(aes(x = fct_infreq(species),
@@ -239,15 +292,17 @@ As visualized in Figure \@ref(fig:count-species-villagers), there are `r nrow(vi
 
 
 
-
 ## An analysis of the Items in the Animal Crossing World
 
-```{r item-categories}
+The Animal Crossing world has many different items assisting the villagers in tasks such as building houses, fishing, bug-hunting, digging etc. Each of these items have their own characteristics and belong to one of the `r length(unique(items$category))` categories.
+
+Figure \@ref(fig:item-categories) visualizes the number of items belonging to each of the item categories. Most of the items in the Animal Crossing are furniture items, while there are also alot of photos. The categories fruit and seashells contain the least number of items, while it's interesting to see more types of umbrellas and socks than fruits. The Animal Crossing world seems very well equipped with item categories ranging from flooring to umbrellas.
+
+```{r item-categories, fig.cap="Count of items belonging to each category"}
 items %>%
   ggplot(aes(x = fct_infreq(category))) +
   geom_bar(aes(fill = category)) +
-  labs(title="Number of Items belonging to each category",
-       x = "Item Category",
+  labs(x = "Item Category",
        y = "Number of Items") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         legend.position = "none")
@@ -375,26 +430,12 @@ ggplotly(
     geom_boxplot() +
     labs(x = "User review sentiment score")
 )
->>>>>>> aeb99565d9314c4ed09d07207857c444b991bd4a
 ```
 
-Base on the analysis(/@tab:analysis species)(/@fig:graph of species), we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing,which is cat 6%,rabbit 5%,squirrel 5%.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
+The boxplot in figure \@ref(fig:user-review-sentiments) states that the overall sentiment of the user reviews to be just slightly positive at 0.4, which is surprising as it would've been expected to be much higher with the recent popularity it has gotten. Most of the sentiments of the reviews also lie within a range of -1 to +1, which may indicate to us that Animal crossing isn't enjoyed by all and there are as many users dissatisfied by the game or disliking the game as those enjoying it.
 
-[`r knitr::include_graphics("Images/villagers.png")`]{style="align:right;"}
+The mean sentiment score of each review against its review score is plotted in figure \@ref(fig:user-review-score-vs-sentiment).
 
-<<<<<<< HEAD
-### analysis the personality of villagers
-```{r analysis personality}
-dat2 <- villagers%>%
-  select(personality)%>%
-  group_by(personality)%>%
-  mutate(case=n())%>%
-  mutate(per = round(n()/381*100))%>%
-  arrange(-case)%>%
-  unique()
-```
-
-=======
 ```{r user-review-score-vs-sentiment, fig.cap="Mean sentiment score of reviews against its review score"}
 ggplotly(
   user_review_sentiments %>%
@@ -430,43 +471,39 @@ Figure \@ref(fig:critic-review-trend) represents the trend in the number of crit
 
 Since critics have the ability to influence people through their comments, it might be interesting to see the most used positive and negative words in their reviews.
 
+```{r critic-positive-wordcloud, fig.cap="The most used positive words by the critics"}
 
-```{r graph of personality}
-Graph_per<- dat2 %>%
-  ggplot(aes(x =reorder(personality,-per), y = per, fill = personality))+
-  geom_bar(stat = "identity", show.legend = FALSE)+
-  ggtitle("Analysis the different personality of villagers")+
-  theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
-  labs(x = "personality" , y = "per")+
-   geom_text(aes(label=per),position = position_stack(vjust=1.1))
-Graph_per
+bing <- get_sentiments("bing")
 
-```
-Accounding to the analysis(/@fig:graph of personality), we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game.
+critic_words <- critics %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words, by="word") 
 
-### What are the most common star signs of the villagers based on their birthdates?
-```{r birthday}
-dat3 <- villagers %>%
-  select(birthday,name)%>%
-  mutate(birth_day = str_split(birthday,"-")) %>%
-  unnest_wider(birth_day) %>%
-  rename("birth_month" = ...1,
-         "birth_date" = ...2)
+critic_word_freq <- critic_words %>%
+  group_by(word) %>%
+  summarise(freq = n()) %>%
+  arrange(desc(freq)) %>%
+  inner_join(bing, by = "word")
 
-dat4 <- dat3%>%
-  select(birth_month)%>%
-  group_by(birth_month)%>%
-  mutate(case=n())%>%
-  arrange(-case)%>%
-  unique()
-
- knitr::kable(head(dat4,10),
-  caption = "villagers birthday month analysis") %>% 
-  kable_styling(latex_options = c("striped", "hold_position"))
+wordcloud(words = (critic_word_freq %>% filter(sentiment == "positive"))$word,
+          freq = (critic_word_freq %>% filter(sentiment == "positive"))$freq,
+          min.freq = 1,
+          max.words=100,
+          random.order=FALSE,
+          rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
 ```
 
+```{r critic-negative-wordcloud, fig.cap="The most used negative words by the critics"}
 
-Base on the analysis(/@tab:birthday)Most villager have birthdays in October,the second is August. So, the most common star signs is libra.
+wordcloud(words = (critic_word_freq %>% filter(sentiment == "negative"))$word,
+          freq = (critic_word_freq %>% filter(sentiment == "negative"))$freq,
+          min.freq = 1,
+          max.words=100,
+          random.order=FALSE,
+          rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+```
 
 Figure \@ref(fig:critic-positive-wordcloud) shows the most used positive words in the critic reviews while figure \@ref(fig:critic-negative-wordcloud) shows the most negative words. By direct observation of the number of terms in the two word clouds, the positivity seems to overpower the negativity in the critics reviews.
 
@@ -474,6 +511,12 @@ Figure \@ref(fig:critic-word-categories) is a further breakdown of the words use
 
 ```{r critic-word-categories, fig.cap="Break down of words used by critics into different emotional categories"}
 nrc <- get_sentiments("nrc")
+
+critic_word_sent_category <- critic_words %>%
+  group_by(word) %>%
+  summarise(freq = n()) %>%
+  arrange(desc(freq)) %>%
+  inner_join(nrc, by = "word")
 
 ggplotly(
 critic_word_sent_category %>%
@@ -508,5 +551,3 @@ It's interesting how a significant percentage of the reviews score the game abov
 
 
 # References
-
-
