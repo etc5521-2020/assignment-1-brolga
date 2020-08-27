@@ -205,8 +205,6 @@ dat <- villagers%>%
   unique()
 
 
-
-
  knitr::kable(head(dat,10),
   caption = "Table. Ranking of villagers species") %>% 
   kable_styling(latex_options = c("striped", "hold_position"))
