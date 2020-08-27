@@ -375,14 +375,12 @@ ggplotly(
     geom_boxplot() +
     labs(x = "User review sentiment score")
 )
->>>>>>> aeb99565d9314c4ed09d07207857c444b991bd4a
 ```
 
 Base on the analysis(/@tab:analysis species)(/@fig:graph of species), we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing,which is cat 6%,rabbit 5%,squirrel 5%.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
 
 [`r knitr::include_graphics("Images/villagers.png")`]{style="align:right;"}
 
-<<<<<<< HEAD
 ### analysis the personality of villagers
 ```{r analysis personality}
 dat2 <- villagers%>%
@@ -394,7 +392,6 @@ dat2 <- villagers%>%
   unique()
 ```
 
-=======
 ```{r user-review-score-vs-sentiment, fig.cap="Mean sentiment score of reviews against its review score"}
 ggplotly(
   user_review_sentiments %>%
