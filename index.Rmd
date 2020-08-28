@@ -252,17 +252,20 @@ The Animal Crossing world has many different items assisting the villagers in ta
 Figure \@ref(fig:item-categories) visualizes the number of items belonging to each of the item categories. Most of the items in the Animal Crossing are furniture items, while there are also alot of photos. The categories fruit and seashells contain the least number of items, while it's interesting to see more types of umbrellas and socks than fruits. The Animal Crossing world seems very well equipped with item categories ranging from flooring to umbrellas.
 
 ```{r item-categories, fig.cap="Count of items belonging to each category"}
-items %>%
+ggplotly(items %>%
   ggplot(aes(x = fct_infreq(category))) +
   geom_bar(aes(fill = category)) +
   labs(x = "Item Category",
        y = "Number of Items") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         legend.position = "none")
+)
 ```
 
-```{r price-distribution-over-categories, eval=FALSE}
-items %>%
+Figure \@ref(fig:price-distribution-over-categories) visualizes the median buying and selling prices of each item category.
+
+```{r price-distribution-over-categories}
+ggplotly(items %>%
   group_by(category) %>%
   summarise(med_buy_price = mean(buy_value, na.rm = TRUE),
             med_sell_price = mean(sell_value, na.rm = TRUE)) %>%
@@ -270,43 +273,41 @@ items %>%
                names_to = "measure",
                values_to = "value") %>%
   ggplot(aes(x = value, y = category)) +
-  geom_point(aes(color = measure)) +
-  scale_fill_manual(values=c("#F8766D", "#00BA38"))
-
-
-
-  pivot_longer(cols = c(sell_value,buy_value),
-               names_to = "type",
-               values_to = "value") %>%
-  ggplot(aes(x=category,
-             y=value,
-             color = category)) +
-  geom_point() +
-  facet_wrap(~ type, nrow = 1) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-        legend.position = "none")
-  
-items %>%
-  filter(category == "Fossils" & !is.na(buy_value)) %>%
-  select(buy_value)
+  geom_point(aes(color = measure), size = 3) +
+  scale_fill_manual(values=c("#F8766D", "#00BA38"))+
+  theme(legend.position = "none"))
 ```
 
-Buying prices of Fish and Fossils were not available
+It's interesting how the median selling price of each category is lower than the median buying price. The median buying prices of fish, fossils and seashells are not available as they are not available for sale in the animal crossing world.
+The difference between the median buying price and median selling price is proportional to the distance between the two points on each category. Furniture seems to have the highest median profit, while photos seem to have the least.
 
-```{r}
-items %>%
+
+The most expensive and cheapest items available to be bought in the Animal crossing world are represented in table \@ref(tab:most-expensive-buys) and table \@ref(tab:cheapest-buys)
+
+```{r most-expensive-buys}
+items_prices <- items %>%
   mutate("Profit" = sell_value - buy_value,
-         "Selling Price" = paste0(sell_value," ",sell_currency),
-         "Buying Price" = paste0(buy_value," ",buy_currency)) %>%
-  filter(Profit > 0) %>%
-  arrange(desc(Profit)) %>%
-  rename("Name" = name,
-         "Category" = category) %>%
-  select(Name, Category, "Selling Price", "Buying Price", Profit) %>%
-  kable() %>%
+         "Selling Price" = paste0(format(sell_value, scientific=F)," ",sell_currency),
+         "Buying Price" = paste0(format(buy_value, scientific=F)," ",buy_currency))
+
+items_prices %>%
+  arrange(desc(buy_value)) %>%
+  select(name, category,`Buying Price`,`Selling Price`) %>%
+  head() %>%
+  kable(caption = "Most expensive items available to buy") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
+```{r cheapest-buys}
+items_prices %>%
+  arrange(buy_value) %>%
+  select(name, category,`Buying Price`,`Selling Price`) %>%
+  head() %>%
+  kable(caption = "Cheapest items available to buy") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+The most expensive items available to buy are crowns and furniture such as armors, caskets, pianos and toilets while the cheapest items are all photos. Upon attempting to analyse the most profitable items based on resale, it was identified that no item in the Animal Crossing world generated a profit on resale. 
 
 ## What do the users say?
 
@@ -378,12 +379,10 @@ user_review_sentiments <- user_review_words %>%
   group_by(user_name, date, grade) %>%
   summarise(mean_sentiment = mean(value))
 
-ggplotly(
   user_review_sentiments %>%
     ggplot(aes(x = mean_sentiment)) +
     geom_boxplot() +
     labs(x = "User review sentiment score")
-)
 ```
 
 The boxplot in figure \@ref(fig:user-review-sentiments) states that the overall sentiment of the user reviews to be just slightly positive at 0.4, which is surprising as it would've been expected to be much higher with the recent popularity it has gotten. Most of the sentiments of the reviews also lie within a range of -1 to +1, which may indicate to us that Animal crossing isn't enjoyed by all and there are as many users dissatisfied by the game or disliking the game as those enjoying it.
