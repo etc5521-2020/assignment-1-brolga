@@ -22,6 +22,7 @@ library(tidytext)
 library(ggplot2)
 library(wordcloud)
 library(plotly)
+library(lubridate)
 set.seed(5521.2020)
 ```
 
@@ -62,7 +63,6 @@ Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided 
 
 * What are the most common species of animals(villagers) in the Animal Crossing world?  
 * What are the personality types of the villagers?  
-* What are the most common star signs of the villagers based on their birthdates?  
 * What are the different categories of items available in the Animal Crossing world?  
 * What are the cheapest and most expensive items available?
 * How can players maximize their profits by buying and re-selling items?
@@ -191,107 +191,59 @@ items <- items %>%
 ## An analysis of the villagers in the Animal Crossing World
 
 
-Anmials crossing as a hot shell games, the ways of paly the game is unique.Now, we will do some research of the unique villagers system.
+Non-player characters (NPC) play an important role in most games, to guide the player through the game and give the player a better virtual experience. In the Animal Crossing world, the non-player characters are called villagers and not only guide the player through the game but also live alongside the player in the game world.
 
-NPC,which is non-player character.It is an essential part of every game, which can guide the player how to play the game better.but,in anmials crossing,NPC become villagers,They will not only teach you to play games, but also accompany you in your live in the game world. There are 381 different types of villagers in the game.
-
-
-### analysis the species of villagers
-```{r analysis species}
-dat <- villagers%>%
-  select(species)%>%
-  group_by(species)%>%
-  mutate(case=n())%>%
-  mutate(prop = round(n()/381*100))%>%
-  arrange(-case)%>%
-  unique()
-
- knitr::kable(head(dat,10),
-  caption = "Table. Ranking of villagers species") %>% 
-  kable_styling(latex_options = c("striped", "hold_position"))
-
-```
-
-Base on the analysis(/@tab:analysis species)(/@fig:graph of species), we can see that the cat,rabbit and squirrel are the top3 rank in the anmials crossing,which is cat 6%,rabbit 5%,squirrel 5%.As we can know that in daily life, these three animals are very popular. The game designer,they captures the psyche of the people,and create a lot of characters that they love,which make people love this game.Each character is very eye-catching.That's the magic of the game,that's why it's so popular.
-
-[`r knitr::include_graphics("Images/villagers.png")`]{style="align:right;"}
-
-### analysis the personality of villagers
-```{r analysis personality}
-dat2 <- villagers%>%
-  select(personality)%>%
-  group_by(personality)%>%
-  mutate(case=n())%>%
-  mutate(per = round(n()/381*100))%>%
-  arrange(-case)%>%
-  unique()
-```
-
- 
-```{r graph of species}
-Graph_spe<- dat %>%
-  ggplot(aes(x =reorder(species,-prop), y = prop, fill = species))+
-  geom_bar(stat = "identity", show.legend = FALSE)+
-  ggtitle("Analysis the different species of villagers")+
-  theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
-  labs(x = "species" , y = "prop")+
-   geom_text(aes(label=prop),position = position_stack(vjust=1.1))
-Graph_spe
-```
-
-```{r graph of personality}
-Graph_per<- dat2 %>%
-  ggplot(aes(x =reorder(personality,-per), y = per, fill = personality))+
-  geom_bar(stat = "identity", show.legend = FALSE)+
-  ggtitle("Analysis the different personality of villagers")+
-  theme(axis.text.x=element_text(angle = 90, hjust = 1)) +
-  labs(x = "personality" , y = "per")+
-   geom_text(aes(label=per),position = position_stack(vjust=1.1))
-Graph_per
-
-```
-Accounding to the analysis(/@fig:graph of personality), we can see that there are eight different personality in the game, lazy is the biggest factor.The theme of this game is leisure, we can know that why lazy personality is top1, which allows the player to feel free and relaxed.The designer set it so carefully,it allows the player to really experience the game.This is one of the reasons for the success of the game.
-
-### What are the most common star signs of the villagers based on their birthdates?
-```{r birthday}
-dat3 <- villagers %>%
-  select(birthday,name)%>%
-  mutate(birth_day = str_split(birthday,"-")) %>%
-  unnest_wider(birth_day) %>%
-  rename("birth_month" = ...1,
-         "birth_date" = ...2)
-
-dat4 <- dat3%>%
-  select(birth_month)%>%
-  group_by(birth_month)%>%
-  mutate(case=n())%>%
-  arrange(-case)%>%
-  unique()
-
- knitr::kable(head(dat4,10),
-  caption = "villagers birthday month analysis") %>% 
-  kable_styling(latex_options = c("striped", "hold_position"))
-```
-
-
-Base on the analysis(/@tab:birthday)Most villager have birthdays in October,the second is August. So, the most common star signs is libra.
-
-The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favorite song and unique catch phrase.
+The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favorite song and unique catch phrase. The game is designed such that each villager is an independent individual keeping players attracted to the game for hours.
 
 Figure \@ref(fig:count-species-villagers) is a plot of the villagers in the Animal Crossing world belonging to each species and gender category.
 
 ```{r count-species-villagers, fig.cap="The number of villagers belonging to each species"}
+ggplotly(
 villagers %>%
   ggplot(aes(x = fct_infreq(species),
              fill = gender)) +
   geom_bar() +
   coord_flip() +
   labs(y = "Number of Villagers",
-       x = "Species")
+       x = "Species") +
+  scale_fill_manual(values=c('#FF55C3','#3EB8FB'))
+)
 ```
 
 As visualized in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octopuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
 
+Figure \@ref(fig:personality-counts) is a breakdown of the villagers by their personalities and genders.
+
+```{r personality-counts, fig.cap="Count of villagers if each personality type in Animal Crossing"}
+ggplotly(villagers %>%
+  ggplot(aes(x = personality,
+             fill = gender)) +
+  geom_bar() +
+  labs(x = "Personality",
+       y = "Number of Villagers") +
+  scale_fill_manual(values=c('#FF55C3','#3EB8FB'))
+)
+```
+
+According to figure \@ref(fig:count-species-villagers), the villagers in the Animal Crossing world belong to either of eight different personality types. It's interesting how most villagers have normal or lazy personalities, while very few have smug or uchi personalities. The Uchi personality type which is also the rarest personality type, is described as sisterly, tough and caring about their appearance @UCHI.
+
+Another direct insight from figure \@ref(fig:count-species-villagers) is that each personality type relates to a single gender. Female villagers in the Animal Crossing World are either normal, peppy, snooty or uchi while males are either cranky, jocky, lazy or smug. 
+
+
+```{r species-personality-villagers, fig.cap="The different personallity types of each species"}
+ggplotly(
+villagers %>%
+  ggplot(aes(x = fct_infreq(species),
+             fill = personality)) +
+  geom_bar() +
+  coord_flip() +
+  labs(y = "Number of Villagers",
+       x = "Species") +
+  scale_fill_brewer(palette = "Spectral")
+)
+```
+
+Figure \@ref(fig:species-personality-villagers) is a plot of the number of villagers belonging to each species broken down by their personality types. By the analysis, it is evident that the Animal Crossing world has a diverse set of villagers belonging to different species and genders and also having different personalities.
 
 ## An analysis of the Items in the Animal Crossing World
 
