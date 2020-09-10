@@ -1,3 +1,10 @@
+#ETC5521 Assignment 2
+
+Team members:
+Sen Wang
+Mayunk Bharadwaj
+
+
 # ETC5521 Assignment 1 
 
 Team name: brolga
