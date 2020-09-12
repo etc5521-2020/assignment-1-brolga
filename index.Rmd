@@ -413,10 +413,21 @@ grid.arrange(p1, p2, ncol=2)
 
 According to the figure \@ref(fig:high_vs_low), there is a lot overlapping for the most common words. We can extract some information is, in the high group, the user in the comments putting more games, series, fun, review, love, amazing and 10 and in the low group, the user in the comments putting more buy, experience, person, 1, progress, family and multiple. Only seven words are different. So it's hard to analyze from common words why users give high marks or low marks. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
 
-
-
-
 A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment.
+
+```{r grade-mean-sentiments}
+grade_mean_sentiments <- user_review_words %>%
+  inner_join(afinn, by = "word") %>%
+  group_by(grade) %>%
+  summarise(sentiment = mean(value)) %>%
+  arrange(desc(grade))  %>%
+  kable(caption = "Mean sentiments of each grade group") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+grade_mean_sentiments
+```
+
+The table \@ref(tab:grade-mean-sentiments) shows the mean sentiment in the different group grade.
+We can see very clearly when the higher the mean sentiment is, the higher the user's rating will be. But for this game the mean sentiment in grade 2 group is higher than grade 1 group probably because the user reviews are low.
 
 Figure \@ref(fig:user-review-sentiments) is a boxplot summarizing the sentiment scores of all `r nrow(user_reviews)` from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
 
