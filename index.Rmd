@@ -366,7 +366,55 @@ user_reviews %>%
 )
 ```
 
-Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scoring the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
+Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scoring the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated.
+
+```{r low-grade-review}
+low_grade_review <- user_review_words %>%
+  filter(grade < 4) %>%
+  group_by(word) %>%
+  summarise(freq = n()) %>%
+  arrange(desc(freq))
+
+p1 <- ggplot(low_grade_review[1:20,], 
+             aes(reorder(word, freq),
+                 freq))+
+  geom_bar(stat = "identity",fill = "lightblue", alpha = 0.9) +
+  geom_text(aes(label = freq), color="Black", size=3.5) +
+  coord_flip() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  xlab("") +
+  ylab("frequency") +
+  ggtitle("The top 20 common words in low grade reviews")
+```
+
+```{r high-grade-review}
+high_grade_review <- user_review_words %>%
+  filter(grade > 6) %>%
+  group_by(word) %>%
+  summarise(freq = n()) %>%
+  arrange(desc(freq))
+
+p2 <- ggplot(high_grade_review[1:20,], 
+             aes(reorder(word, freq),
+                 freq))+
+  geom_bar(stat = "identity",fill = "pink", alpha = 0.9) +
+  geom_text(aes(label = freq), color="Black", size=3.5) +
+  coord_flip() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  xlab("") +
+  ylab("frequency") +
+  ggtitle("The top 20 common words in high grade reviews")
+```
+
+```{r high_vs_low, , fig.cap="The top 15 common words in low and high grade reviews"}
+library(gridExtra)
+grid.arrange(p1, p2, ncol=2)
+```
+
+According to the figure \@ref(fig:high_vs_low), there is a lot overlapping for the most common words. We can extract some information is, in the high group, the user in the comments putting more games, series, fun, review, love, amazing and 10 and in the low group, the user in the comments putting more buy, experience, person, 1, progress, family and multiple. Only seven words are different. So it's hard to analyze from common words why users give high marks or low marks. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
+
+
+
 
 A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment.
 
