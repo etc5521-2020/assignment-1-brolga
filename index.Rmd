@@ -3,8 +3,8 @@ title: "ETC5521 Assignment 2"
 subtitle: "Animal Crossing"
 team: brolga
 author:
-  - Dilinie Seimon
-  - Diyao Chen
+  - Sen Wang
+  - Mayunk Bharadwaj
 date: "`r Sys.Date()`"
 output: 
   bookdown::html_document2
