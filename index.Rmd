@@ -287,27 +287,6 @@ ggplotly(
 
 The astounding reception of Animal Crossing: New Horizons since its world release on the 20th of March 2020 is justified by the number of daily user reviews it has received. Figure \@ref(fig:user-review-trend) shows a huge spike in the number of reviews on the 24th of March 2020, lasting till about the 26th of March 2020, which may be attributed to the world release of the game on the 20th of March 2020. The number of reviews there after remain consistent other than another smaller spike around the 28th of April 2020.
 
-Figure \@ref(fig:user-review-wordcloud) shows the most common words in the user reviews for the game. The words 'game', 'island', 'switch' and 'play' are the most common words used in the reviews and a direct positive or negative significance can not be obtained based on them.
-
-```{r user-review-wordcloud, fig.cap="The most used words in the user reviews"}
-user_review_words <- user_reviews %>%
-  unnest_tokens(word, text) %>%
-  anti_join(stop_words, by="word") 
-
-user_review_word_freq <- user_review_words %>%
-  group_by(word) %>%
-  summarise(freq = n()) %>%
-  arrange(desc(freq)) 
-
-wordcloud(words = user_review_word_freq$word,
-          freq = user_review_word_freq$freq,
-          min.freq = 1,
-          max.words=100,
-          random.order=FALSE,
-          rot.per=0.35, 
-          colors=brewer.pal(8, "Dark2"))
-```
-
 The user reviews also includes a score from 0-10, where 0 is the lowest and 10 is the highest. Figure \@ref(fig:user-review-scores) is a plot of the distribution of scores ranging from 0-10.
 
 ```{r user-review-scores, fig.cap="Distribution of user review scores on Animal Crossing: New Horizons"}
