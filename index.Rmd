@@ -157,9 +157,9 @@ ggplotly(
 villagers %>%
   ggplot(aes(x = fct_infreq(species),
              fill = gender)) +
-  geom_bar() +
+  geom_bar(position="fill") +
   coord_flip() +
-  labs(y = "Number of Villagers",
+  labs(y = "Gender ratio of Villagers",
        x = "Species") +
   scale_fill_manual(values=c('#FF55C3','#3EB8FB'))
 )
