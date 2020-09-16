@@ -1,6 +1,6 @@
 ---
-title: "ETC5521 Assignment 1"
-subtitle: "Your title"
+title: "ETC5521 Assignment 2"
+subtitle: "Animal Crossing"
 team: brolga
 author:
   - Dilinie Seimon
@@ -82,51 +82,6 @@ The dataset used for this analysis was retrieved from [TidyTuesday](https://gith
 The retrieved dataset consisted of four sub-datasets; 'villagers' and 'items' datasets containing data about in-game characters and items, and 'user reviews' and 'critic reviews' datasets containing data about user and critics reviews on the game.
 
 The 'villagers' and 'items' datasets have been originally retrieved from [VillagerDB](https://github.com/jefflomacy/villagerdb), which is a project aimed at making data about Animal Crossing available and easily accessible, while the user and critic reviews have been originally retrieved by scraping the [Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/critic-reviews) website.
-
-### Data dictionary
-
-```{r}
-data_dict <- function(df, desc = c()){
-  return(data.frame(
-    "Variable" = names(df),
-    "Description" = desc, 
-    check.names = FALSE, row.names = NULL
-  ) %>%
-    kable() %>%
-    kable_styling(bootstrap_options = c("striped")))
-}
-```
-**Villagers**
-
-The 'Villagers' dataset consists of data related to the characters in the Animal Crossing game world. The following are the variables in the villagers dataset and their descriptions.
-
-```{r}
-data_dict(villagers, c("Numeric identifier of villager", "Short text identifier of villager", "Name of villager", "Gender of villager", "Species of villager", "Birthday of villager", "Personality of Villager", "Song associated with villager", "Catchphrase of the villager", "Full text identifier of villager", "Link to image of villager"))
-```
-
-**Items**
-
-The 'Items' dataset consists of data related to the items in the Animal Crossing game world. The following are the variables in the items dataset and their descriptions.
-
-```{r}
-data_dict(items, c("Numeric identifier of item", "Character identifier of villager", "Name of item", "Category of item", "Orderable from catalog", "Selling value", "Selling currency", "Buying value", "Buying currency", "Way/place to acquire item", "Is item customizable", "Recipe of the item - material made of", "Recipe ID", "Game ID", "Full Character ID", "Link to image of item"))
-```
-
-**User Reviews**
-
-The 'User Reviews' dataset consists of the scores and reviews made by users from `r min(user_reviews$date)` to `r max(user_reviews$date)`.
-
-```{r}
-data_dict(user_reviews, c("Raw score(0-10) given, 0-lowest and 10-highest","User name of the reviewer","Raw text of the review","Date the review was published"))
-```
-
-**Critic Reviews**
-
-The 'Critic Reviews' dataset consists of the scores and reviews made by critics about the game from `r min(critics$date)` to `r max(critics$date)`.
-
-```{r}
-data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The source of the reviewer","Raw text of the review","Date the review was published"))
-```
 
 # Data Exploration and Wrangling
 
