@@ -561,6 +561,62 @@ critics %>%
 
 It's interesting how a significant percentage of the reviews score the game above 90, while all of the scores are above 70. Comparing figure \@ref(fig:user-review-scores) and figure \@ref(fig:critics-score-distribution), all the critics seem impressed with the game while the users have mixed reviews.
 
+# How do reviews change over time?
+
+We know based off our previous analysis, that *Animal Crossing* is something of a slow-burn as the game aims to simulate the pace of real life in certain ways. As such, this might affect the ability of reviewers (both critics and users) to fairly assess the game. For instance, how can users conceivably be able to review the game within the week of its release? How can one get a sound grasp of the functionality and the intrinsic rewards of the game without playing it for a few weeks at a minimum?
+
+So, let's group both user and critic reviews by week and calculate the average review and how it changes as the weeks pass. 
+
+```{r weekly-critic-user-grade-trend}
+weekly_average_user_reviews <- user_reviews %>%
+  mutate(week=week(date)) %>%
+  group_by(week) %>%
+  summarise(weekly_average_user_grade=mean(grade))
+
+weekly_average_user_reviews_plot <- weekly_average_user_reviews %>%
+  ggplot(aes(x=week,y=weekly_average_user_grade)) +
+  geom_line() +
+  xlab("Week") +
+  ylab("Average User Grade")
+
+weekly_average_critic_reviews <- critics %>%
+  mutate(week=week(date)) %>%
+  group_by(week) %>%
+  summarise(weekly_average_critic_grade=mean(grade))
+
+weekly_average_critic_reviews_plot <- weekly_average_critic_reviews %>%
+  ggplot(aes(x=week,y=weekly_average_critic_grade)) +
+  geom_line() +
+  xlab("Week") +
+  ylab("Average Critic Grade")
+
+combined_weekly_critic_user_grades <- merge(weekly_average_user_reviews,weekly_average_critic_reviews,by="week")
+```
+
+```{r weekly-critic-user-grade-trend-plot, fig.cap="Weekly average User and Critic Grades}
+
+gridExtra::grid.arrange(weekly_average_user_reviews_plot,weekly_average_critic_reviews_plot)
+
+```
+
+Figure \@ref(fig:weekly-critic-user-grade-trend-plot) shows us the Week (measured as the number of weeks since the start of year and the date of measurement) on the x-axis and the weekly average grade given by User of Critic on the y-axis.
+
+The weekly average user grades starts at about 5.5 before beginning a decline in subsequent weeks and hovering at around 3-3.5 through week 16 before a significant jump in week 17 to 5.5 after which it once again drops.
+
+The weekly average critic grades follow a moderately similar shape. The average critic grades are steady in the early 90s for the first couple of weeks before dipping below 90 in week 15. Interestingly, the average grade then experiences a sharp increase in week 17 - similar to what we saw in the weekly average user grades - before declining again.
+
+```{r critic-user-correlation}
+
+correlation <- cor(combined_weekly_critic_user_grades$weekly_average_user_grade,combined_weekly_critic_user_grades$weekly_average_critic_grade)
+
+```
+
+
+So, overall the data does not suggest that there is a clear indication that users or critics' feelings on the game improve or decline as they spend more time with the game. However, there are two things that ought to be explored from this point. 
+
+Firstly, we can see that the shape of the both weekly average critic and user grades are roughly similar. But how similar? The correlation coefficent of weekly average user grades and weekly average critic grades is `r correlation` which indicates a weakish positive relationship between the two. It is not feasible, therefore, to suggest that there might be an influence of critic reviews on user reviews.
+
+The second thing of interest is the dramatic spike seen in critic and user reviews in week 17. Did something happen in week 17 that led to a dramatic shift in the view of the game? Week 17 occured from the the 22nd of April 2020 to the 28th of April 2020. A quick google search of the term 'Animal Crossing' with a filter on these dates reveals that Nintendo released an update of the game on April the 23rd. [Per Express](https://www.express.co.uk/entertainment/gaming/1271482/Animal-Crossing-New-Horizons-April-update-2-Earth-Day-leaks-reveals-lots-of-NEW-features), the 'Earth Day' update included the addition of a myriad of new features which evidently enriched the experience of game.
 
 # References
 
