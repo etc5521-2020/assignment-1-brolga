@@ -1,10 +1,10 @@
 ---
-title: "ETC5521 Assignment 1"
-subtitle: "Your title"
+title: "ETC5521 Assignment 2"
+subtitle: "Animal Crossing"
 team: brolga
 author:
-  - Dilinie Seimon
-  - Diyao Chen
+  - Sen Wang
+  - Mayunk Bharadwaj
 date: "`r Sys.Date()`"
 output: 
   bookdown::html_document2:
@@ -84,51 +84,6 @@ The retrieved dataset consisted of four sub-datasets; 'villagers' and 'items' da
 
 The 'villagers' and 'items' datasets have been originally retrieved from [VillagerDB](https://github.com/jefflomacy/villagerdb), which is a project aimed at making data about Animal Crossing available and easily accessible, while the user and critic reviews have been originally retrieved by scraping the [Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/critic-reviews) website.
 
-### Data dictionary
-
-```{r}
-data_dict <- function(df, desc = c()){
-  return(data.frame(
-    "Variable" = names(df),
-    "Description" = desc, 
-    check.names = FALSE, row.names = NULL
-  ) %>%
-    kable() %>%
-    kable_styling(bootstrap_options = c("striped")))
-}
-```
-**Villagers**
-
-The 'Villagers' dataset consists of data related to the characters in the Animal Crossing game world. The following are the variables in the villagers dataset and their descriptions.
-
-```{r}
-data_dict(villagers, c("Numeric identifier of villager", "Short text identifier of villager", "Name of villager", "Gender of villager", "Species of villager", "Birthday of villager", "Personality of Villager", "Song associated with villager", "Catchphrase of the villager", "Full text identifier of villager", "Link to image of villager"))
-```
-
-**Items**
-
-The 'Items' dataset consists of data related to the items in the Animal Crossing game world. The following are the variables in the items dataset and their descriptions.
-
-```{r}
-data_dict(items, c("Numeric identifier of item", "Character identifier of villager", "Name of item", "Category of item", "Orderable from catalog", "Selling value", "Selling currency", "Buying value", "Buying currency", "Way/place to acquire item", "Is item customizable", "Recipe of the item - material made of", "Recipe ID", "Game ID", "Full Character ID", "Link to image of item"))
-```
-
-**User Reviews**
-
-The 'User Reviews' dataset consists of the scores and reviews made by users from `r min(user_reviews$date)` to `r max(user_reviews$date)`.
-
-```{r}
-data_dict(user_reviews, c("Raw score(0-10) given, 0-lowest and 10-highest","User name of the reviewer","Raw text of the review","Date the review was published"))
-```
-
-**Critic Reviews**
-
-The 'Critic Reviews' dataset consists of the scores and reviews made by critics about the game from `r min(critics$date)` to `r max(critics$date)`.
-
-```{r}
-data_dict(critics, c("Raw score(0-100) given, 0-lowest and 100-highest","The source of the reviewer","Raw text of the review","Date the review was published"))
-```
-
 # Data Exploration and Wrangling
 
 
@@ -203,9 +158,9 @@ ggplotly(
 villagers %>%
   ggplot(aes(x = fct_infreq(species),
              fill = gender)) +
-  geom_bar() +
+  geom_bar(position="fill") +
   coord_flip() +
-  labs(y = "Number of Villagers",
+  labs(y = "Gender ratio of Villagers",
        x = "Species") +
   scale_fill_manual(values=c('#FF55C3','#3EB8FB'))
 )
@@ -332,27 +287,6 @@ ggplotly(
 ```
 
 The astounding reception of Animal Crossing: New Horizons since its world release on the 20th of March 2020 is justified by the number of daily user reviews it has received. Figure \@ref(fig:user-review-trend) shows a huge spike in the number of reviews on the 24th of March 2020, lasting till about the 26th of March 2020, which may be attributed to the world release of the game on the 20th of March 2020. The number of reviews there after remain consistent other than another smaller spike around the 28th of April 2020.
-
-Figure \@ref(fig:user-review-wordcloud) shows the most common words in the user reviews for the game. The words 'game', 'island', 'switch' and 'play' are the most common words used in the reviews and a direct positive or negative significance can not be obtained based on them.
-
-```{r user-review-wordcloud, fig.cap="The most used words in the user reviews"}
-user_review_words <- user_reviews %>%
-  unnest_tokens(word, text) %>%
-  anti_join(stop_words, by="word") 
-
-user_review_word_freq <- user_review_words %>%
-  group_by(word) %>%
-  summarise(freq = n()) %>%
-  arrange(desc(freq)) 
-
-wordcloud(words = user_review_word_freq$word,
-          freq = user_review_word_freq$freq,
-          min.freq = 1,
-          max.words=100,
-          random.order=FALSE,
-          rot.per=0.35, 
-          colors=brewer.pal(8, "Dark2"))
-```
 
 The user reviews also includes a score from 0-10, where 0 is the lowest and 10 is the highest. Figure \@ref(fig:user-review-scores) is a plot of the distribution of scores ranging from 0-10.
 
