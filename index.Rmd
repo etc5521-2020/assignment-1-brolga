@@ -8,6 +8,8 @@ author:
 date: "`r Sys.Date()`"
 output: 
   bookdown::html_document2
+  toc: true
+  toc_float: true
 bibliography: references.bib
 nocite: '@*'
 ---
