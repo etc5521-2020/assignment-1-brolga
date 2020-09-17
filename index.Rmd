@@ -494,7 +494,7 @@ weekly_average_user_reviews <- user_reviews %>%
 
 weekly_average_user_reviews_plot <- weekly_average_user_reviews %>%
   ggplot(aes(x=week,y=weekly_average_user_grade)) +
-  geom_line() +
+  geom_line(color = "#D53E4F") +
   xlab("Week") +
   ylab("Average User Grade")
 
@@ -505,7 +505,7 @@ weekly_average_critic_reviews <- critics %>%
 
 weekly_average_critic_reviews_plot <- weekly_average_critic_reviews %>%
   ggplot(aes(x=week,y=weekly_average_critic_grade)) +
-  geom_line() +
+  geom_line(color = "#D53E4F") +
   xlab("Week") +
   ylab("Average Critic Grade")
 
