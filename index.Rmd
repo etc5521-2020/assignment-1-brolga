@@ -282,7 +282,8 @@ user_reviews %>%
              fill = "#345453")) +
   geom_bar() +
   labs(x = "Review score",
-       y = "Number of reviews")
+       y = "Number of reviews") +
+  theme(legend.position = "none")
 )
 ```
 
