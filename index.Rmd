@@ -73,7 +73,7 @@ Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided 
 
 * What is the trend of user and critic reviews on the Animal Crossing game?  
 * What do people who gave the most negative reviews dislike about the game and what do the people who gave the most positive reviews enjoy about the game?
-* Do reviews change over time as users spend more time with the game? Do critic reviews impact user reviews?
+* How do reviews change over time?
 
 
 # Data description
@@ -480,7 +480,7 @@ critics %>%
 
 It's interesting how a significant percentage of the reviews score the game above 90, while all of the scores are above 70. Comparing figure \@ref(fig:user-review-scores) and figure \@ref(fig:critics-score-distribution), all the critics seem impressed with the game while the users have mixed reviews.
 
-# How do reviews change over time?
+## How do reviews change over time?
 
 We know based off our previous analysis, that *Animal Crossing* is something of a slow-burn as the game aims to simulate the pace of real life in certain ways. As such, this might affect the ability of reviewers (both critics and users) to fairly assess the game. For instance, how can users conceivably be able to review the game within the week of its release? How can one get a sound grasp of the functionality and the intrinsic rewards of the game without playing it for a few weeks at a minimum?
 
@@ -535,7 +535,13 @@ So, overall the data does not suggest that there is a clear indication that user
 
 Firstly, we can see that the shape of the both weekly average critic and user grades are roughly similar. But how similar? The correlation coefficent of weekly average user grades and weekly average critic grades is `r correlation` which indicates a weakish positive relationship between the two. It is not feasible, therefore, to suggest that there might be an influence of critic reviews on user reviews.
 
-The second thing of interest is the dramatic spike seen in critic and user reviews in week 17. Did something happen in week 17 that led to a dramatic shift in the view of the game? Week 17 occured from the the 22nd of April 2020 to the 28th of April 2020. A quick google search of the term 'Animal Crossing' with a filter on these dates reveals that Nintendo released an update of the game on April the 23rd. [Per Express](https://www.express.co.uk/entertainment/gaming/1271482/Animal-Crossing-New-Horizons-April-update-2-Earth-Day-leaks-reveals-lots-of-NEW-features), the 'Earth Day' update included the addition of a myriad of new features which evidently enriched the experience of game.
+The second thing of interest is the dramatic spike seen in critic and user reviews in week 17. Did something happen in week 17 that led to a dramatic shift in the view of the game? Week 17 occured from the the 22nd of April 2020 to the 28th of April 2020. A quick google search of the term 'Animal Crossing' with a filter on these dates reveals that Nintendo released an update of the game on April the 23rd. [Per Express](https://www.express.co.uk/entertainment/gaming/1271482/Animal-Crossing-New-Horizons-April-update-2-Earth-Day-leaks-reveals-lots-of-NEW-features), the 'Earth Day' update included the addition of a myriad of new features. This evidently enriched the experience of game.
+
+# Conclusion
+
+Animal Crossing: New Horizons is a life-simulation game that challenges users to set up their 'life' on an island and interact with a villagers - who are of a diversity of species and personality types - and items - of which there are many at an an array of buying and selling prices.
+
+User feedbacks of the game was mixed with positie user reviewers revelling in how 'fun' and 'amazing' the game is while negative user reviewers were disappointed in the game's lack of multiplayer functionality. Critics were generally more effusive in their praise of their game with many describing the game as 'perfect' while neagtive critic reviews focussed on the 'slowness' of the game. Critic and user reviewers were very weakly correlated but both displayed a spike in positive reviews after a game update in late April, 2020.
 
 # References
 
