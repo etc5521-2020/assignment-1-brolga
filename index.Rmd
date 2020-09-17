@@ -5,6 +5,7 @@ team: brolga
 author:
   - Sen Wang
   - Mayunk Bharadwaj
+  - Team brolga (Dilinie Seimon, Diyao Chen)
 date: "`r Sys.Date()`"
 output: 
   bookdown::html_document2:
