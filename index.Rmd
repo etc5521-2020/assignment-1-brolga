@@ -78,11 +78,11 @@ Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided 
 
 # Data description
 
-The dataset used for this analysis was retrieved from [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a project aimed at allowing individuals to practice their data wrangling and visualization skills through the use of real-world data sets.
+The data set used for this analysis was retrieved from [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a project aimed at allowing individuals to practice their data wrangling and visualization skills through the use of real-world data sets.
 
-The retrieved dataset consisted of four sub-datasets; 'villagers' and 'items' datasets containing data about in-game characters and items, and 'user reviews' and 'critic reviews' datasets containing data about user and critics reviews on the game.
+The retrieved data set consisted of four sub-data sets; 'villagers' and 'items' data sets containing data about in-game characters and items, and 'user reviews' and 'critic reviews' data sets containing data about user and critics reviews on the game.
 
-The 'villagers' and 'items' datasets have been originally retrieved from [VillagerDB](https://github.com/jefflomacy/villagerdb), which is a project aimed at making data about Animal Crossing available and easily accessible, while the user and critic reviews have been originally retrieved by scraping the [Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/critic-reviews) website.
+The 'villagers' and 'items' data sets have been originally retrieved from [VillagerDB](https://github.com/jefflomacy/villagerdb), which is a project aimed at making data about Animal Crossing available and easily accessible, while the user and critic reviews have been originally retrieved by scraping the [Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/critic-reviews) website.
 
 # Data Exploration and Wrangling
 
@@ -149,7 +149,7 @@ items <- items %>%
 
 Non-player characters (NPC) play an important role in most games, to guide the player through the game and give the player a better virtual experience. In the Animal Crossing world, the non-player characters are called villagers and not only guide the player through the game but also live alongside the player in the game world.
 
-The villagers in Animal Crossing are of different species and also have their own gender, birthdate, personality, favorite song and unique catch phrase. The game is designed such that each villager is an independent individual keeping players attracted to the game for hours.
+The villagers in Animal Crossing are of different species and also have their own gender, birth date, personality, favorite song and unique catch phrase. The game is designed such that each villager is an independent individual keeping players attracted to the game for hours.
 
 Figure \@ref(fig:count-species-villagers) is a plot of the villagers in the Animal Crossing world belonging to each species and gender category.
 
@@ -168,7 +168,7 @@ villagers %>%
 
 As visualized in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octopuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
 
-The villagers in the Animal Crossing world belong to either of eight different personality types - male personality types (cranky, jock, lazy, smug) and female personality types (normal, peppy, smug, snooty, uchi). It's interesting how most villagers have normal or lazy personalities, while very few have smug or uchi personalities. The Uchi personality type which is also the rarest personality type, is described as sisterly, tough and caring about their appearance @UCHI.
+The villagers in the Animal Crossing world belong to either of eight different personality types - male personality types (cranky, jock, lazy, smug) and female personality types (normal, peppy, snooty, uchi). It's interesting how most villagers have normal or lazy personalities, while very few have smug or uchi personalities. The Uchi personality type which is also the rarest personality type, is described as sisterly, tough and caring about their appearance @UCHI.
 
 
 ```{r species-personality-villagers, fig.cap="The different personallity types of each species"}
@@ -190,7 +190,7 @@ Figure \@ref(fig:species-personality-villagers) is a plot of the number of villa
 
 The Animal Crossing world has many different items assisting the villagers in tasks such as building houses, fishing, bug-hunting, digging etc. Each of these items have their own characteristics and belong to one of the `r length(unique(items$category))` categories.
 
-Figure \@ref(fig:item-categories) visualizes the number of items belonging to each of the item categories. Most of the items in the Animal Crossing are furniture items, while there are also alot of photos. The categories fruit and seashells contain the least number of items, while it's interesting to see more types of umbrellas and socks than fruits. The Animal Crossing world seems very well equipped with item categories ranging from flooring to umbrellas.
+Figure \@ref(fig:item-categories) visualizes the number of items belonging to each of the item categories. Most of the items in the Animal Crossing are furniture items, while there are also a lot of photos. The categories fruit and seashells contain the least number of items, while it's interesting to see more types of umbrellas and socks than fruits. The Animal Crossing world seems very well equipped with item categories ranging from flooring to umbrellas.
 
 ```{r item-categories, fig.cap="Count of items belonging to each category"}
 ggplotly(items %>%
@@ -363,7 +363,7 @@ Table \@ref(tab:grade-mean-sentiments) shows the mean sentiment in the different
 
 We can see very clearly the higher the mean sentiment of the user's words is, the higher the user's rating will be. 
 
-Figure \@ref(fig:user-review-sentiments) is a boxplot summarizing the sentiment scores of all `r nrow(user_reviews)` reviews from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
+Figure \@ref(fig:user-review-sentiments) is a box plot summarizing the sentiment scores of all `r nrow(user_reviews)` reviews from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
 
 ```{r user-review-sentiments, fig.cap="Summary of sentiments of user-reviews"}
 afinn <- get_sentiments("afinn")
@@ -379,7 +379,7 @@ user_review_sentiments <- user_review_words %>%
     labs(x = "User review sentiment score")
 ```
 
-The boxplot in figure \@ref(fig:user-review-sentiments) states that the overall sentiment of the user reviews to be just slightly positive at 0.4, which is surprising as it would've been expected to be much higher with the recent popularity it has gotten. Most of the sentiments of the reviews also lie within a range of -1 to +1, which may indicate to us that Animal crossing isn't enjoyed by all and there are as many users dissatisfied by the game or disliking the game as those enjoying it.
+The box plot in figure \@ref(fig:user-review-sentiments) states that the overall sentiment of the user reviews to be just slightly positive at 0.4, which is surprising as it would've been expected to be much higher with the recent popularity it has gotten. Most of the sentiments of the reviews also lie within a range of -1 to +1, which may indicate to us that Animal crossing isn't enjoyed by all and there are as many users dissatisfied by the game or disliking the game as those enjoying it.
 
 ## What do the critics say?
 
@@ -436,7 +436,7 @@ wordcloud(words = (critic_word_freq %>% filter(sentiment == "negative"))$word,
           colors=brewer.pal(8, "Dark2"))
 ```
 
-Figure \@ref(fig:critic-positive-wordcloud) shows the most used positive words in the critic reviews while figure \@ref(fig:critic-negative-wordcloud) shows the most negative words. By direct observation of the number of terms in the two word clouds, the positivity seems to overpower the negativity in the critics reviews.
+Figure \@ref(fig:critic-positive-wordcloud) shows the most used positive words in the critic reviews while figure \@ref(fig:critic-negative-word cloud) shows the most negative words. By direct observation of the number of terms in the two word clouds, the positivity seems to overpower the negativity in the critics reviews.
 
 Figure \@ref(fig:critic-word-categories) is a further breakdown of the words used by critics in their reviews, based on different emotions portrayed.
 
@@ -533,15 +533,15 @@ correlation <- cor(combined_weekly_critic_user_grades$weekly_average_user_grade,
 
 So, overall the data does not suggest that there is a clear indication that users or critics' feelings on the game improve or decline as they spend more time with the game. However, there are two things that ought to be explored from this point. 
 
-Firstly, we can see that the shape of the both weekly average critic and user grades are roughly similar. But how similar? The correlation coefficent of weekly average user grades and weekly average critic grades is `r correlation` which indicates a weakish positive relationship between the two. It is not feasible, therefore, to suggest that there might be an influence of critic reviews on user reviews.
+Firstly, we can see that the shape of the both weekly average critic and user grades are roughly similar. But how similar? The correlation coefficient of weekly average user grades and weekly average critic grades is `r correlation` which indicates a weak-ish positive relationship between the two. It is not feasible, therefore, to suggest that there might be an influence of critic reviews on user reviews.
 
-The second thing of interest is the dramatic spike seen in critic and user reviews in week 17. Did something happen in week 17 that led to a dramatic shift in the view of the game? Week 17 occured from the the 22nd of April 2020 to the 28th of April 2020. A quick google search of the term 'Animal Crossing' with a filter on these dates reveals that Nintendo released an update of the game on April the 23rd. [Per Express](https://www.express.co.uk/entertainment/gaming/1271482/Animal-Crossing-New-Horizons-April-update-2-Earth-Day-leaks-reveals-lots-of-NEW-features), the 'Earth Day' update included the addition of a myriad of new features. This evidently enriched the experience of game.
+The second thing of interest is the dramatic spike seen in critic and user reviews in week 17. Did something happen in week 17 that led to a dramatic shift in the view of the game? Week 17 occurred from the the 22nd of April 2020 to the 28th of April 2020. A quick google search of the term 'Animal Crossing' with a filter on these dates reveals that Nintendo released an update of the game on April the 23rd. [Per Express](https://www.express.co.uk/entertainment/gaming/1271482/Animal-Crossing-New-Horizons-April-update-2-Earth-Day-leaks-reveals-lots-of-NEW-features), the 'Earth Day' update included the addition of a myriad of new features. This evidently enriched the experience of game.
 
 # Conclusion
 
 Animal Crossing: New Horizons is a life-simulation game that challenges users to set up their 'life' on an island and interact with a villagers - who are of a diversity of species and personality types - and items - of which there are many at an an array of buying and selling prices.
 
-User feedbacks of the game was mixed with positie user reviewers revelling in how 'fun' and 'amazing' the game is while negative user reviewers were disappointed in the game's lack of multiplayer functionality. Critics were generally more effusive in their praise of their game with many describing the game as 'perfect' while neagtive critic reviews focussed on the 'slowness' of the game. Critic and user reviewers were very weakly correlated but both displayed a spike in positive reviews after a game update in late April, 2020.
+User feedback of the game was mixed with positive user reviewers rejoicing in how 'fun' and 'amazing' the game is while negative user reviewers were disappointed in the game's lack of multiplayer functionality. Critics were generally more effusive in their praise of their game with many describing the game as 'perfect' while negative critic reviews focused on the 'slowness' of the game. Critic and user reviewers were very weakly correlated but both displayed a spike in positive reviews after a game update in late April, 2020.
 
 # References
 
