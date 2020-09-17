@@ -50,13 +50,13 @@ villagers <- read_csv("Data/villagers.csv")
 
 `r knitr::include_graphics("Images/animal-crossing-new-horizons.jpg")`
 
-Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since it's inception the game has had an astounding world-wide reception With over 22 million copies of the game being sold in just 5 months.
+Animal Crossing: New Horizons is a life simulation video game developed and published by Nintendo for the Nintendo Switch. It was released worldwide on the 20th of March 2020. Since its inception, the game has had an astounding worldwide reception with over twenty-two million copies of the game being sold in just five months.
 
-In the animal crossing world a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called villagers in the animal crossing world, have their own name, gender, birthday, personality, favorite song and their own catchphrase. The items used in performing different tasks in the animal crossing belong to different categories and are also priced at different buying and selling values.
+In the Animal Crossing world, a player takes the role of a customized human character who moves to a deserted island and carries out various activities such as gathering and crafting items, fishing and bug hunting in a village inhabited by various species of animals. Each of these animals called 'villagers' in the Animal Crossing world have their own name, gender, birthday, personality, favourite song and their own catchphrase. The items used in performing different tasks in the Animal Crossing world belong to different categories and are also priced at different buying and selling values.
 
-The game also simulates day and night based on a 24 hour clock, and has different animals and insects appearing at specific times of day or night. The level of detail in the design of the Animal Crossing world has attracted many users playing throughout the day.
+The game also simulates day and night based on a 24-hour clock, and has different animals and insects appearing at specific times of day or night. The level of detail in the design of the Animal Crossing world has attracted many users playing throughout the day.
 
-Although it has been 5 only months since the game was released worldwide, it has been gaining a lot of attention from both players and critics. Even non-players may find the concept of this game well designed and interesting.
+Although it has been only five months since the game was released worldwide, it has gained a lot of attention from both players and critics. Even non-players may find the concept of this game well-designed and interesting.
 
 The motivation for choosing Animal Crossing for the analysis is to attempt to understand the reason for the immense popularity of the game using user and critic reviews and features within the game (such as the villagers and the items).
 
@@ -64,18 +64,16 @@ Therefore, the analysis of the Animal Crossing: New Horizons game is subdivided 
 
 **An analysis of the villagers and items used in the Animal Crossing world**  
 
-* What are the most common species of animals(villagers) in the Animal Crossing world?  
+* What are the most common species of animals (villagers) in the Animal Crossing world?  
 * What are the personality types of the villagers?  
 * What are the different categories of items available in the Animal Crossing world?  
-* What are the cheapest and most expensive items available?
-* How can players maximize their profits by buying and re-selling items?
 
 **What are players and critics saying about Animal Crossing?**
 
 
 * What is the trend of user and critic reviews on the Animal Crossing game?  
-* What are the most common words users and critics use to describe Animal Crossing?  
-* What are the sentiments and emotions portrayed by the users and critics reviews?  
+* What do people who gave the most negative reviews dislike about the game and what do the people who gave the most positive reviews enjoy about the game?
+* Do reviews change over time as users spend more time with the game? Do critic reviews impact user reviews?
 
 
 # Data description
