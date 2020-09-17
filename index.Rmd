@@ -7,9 +7,8 @@ author:
   - Diyao Chen
 date: "`r Sys.Date()`"
 output: 
-  bookdown::html_document2
-  toc: true
-  toc_float: true
+  bookdown::html_document2:
+    toc: true
 bibliography: references.bib
 nocite: '@*'
 ---
@@ -418,6 +417,9 @@ According to the figure \@ref(fig:high_vs_low), there is a lot overlapping for t
 A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment.
 
 ```{r grade-mean-sentiments}
+
+afinn <- get_sentiments("afinn")
+
 grade_mean_sentiments <- user_review_words %>%
   inner_join(afinn, by = "word") %>%
   group_by(grade) %>%
@@ -595,7 +597,7 @@ weekly_average_critic_reviews_plot <- weekly_average_critic_reviews %>%
 combined_weekly_critic_user_grades <- merge(weekly_average_user_reviews,weekly_average_critic_reviews,by="week")
 ```
 
-```{r weekly-critic-user-grade-trend-plot, fig.cap="Weekly average User and Critic Grades}
+```{r weekly-critic-user-grade-trend-plot, fig.cap="Weekly average User and Critic Grades"}
 
 gridExtra::grid.arrange(weekly_average_user_reviews_plot,weekly_average_critic_reviews_plot)
 
