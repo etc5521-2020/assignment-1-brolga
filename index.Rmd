@@ -100,7 +100,7 @@ ggplotly(
 items %>%
   group_by(category) %>%
   summarise(pct_missing = sum(is.na(buy_value))/n()*100) %>%
-  ggplot(aes(x = category,
+  ggplot(aes(x = reorder(category,-pct_missing),
              y = pct_missing)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
