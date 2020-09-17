@@ -169,22 +169,7 @@ villagers %>%
 
 As visualized in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octopuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
 
-Figure \@ref(fig:personality-counts) is a breakdown of the villagers by their personalities and genders.
-
-```{r personality-counts, fig.cap="Count of villagers if each personality type in Animal Crossing"}
-ggplotly(villagers %>%
-  ggplot(aes(x = personality,
-             fill = gender)) +
-  geom_bar() +
-  labs(x = "Personality",
-       y = "Number of Villagers") +
-  scale_fill_manual(values=c('#FF55C3','#3EB8FB'))
-)
-```
-
-According to figure \@ref(fig:count-species-villagers), the villagers in the Animal Crossing world belong to either of eight different personality types. It's interesting how most villagers have normal or lazy personalities, while very few have smug or uchi personalities. The Uchi personality type which is also the rarest personality type, is described as sisterly, tough and caring about their appearance @UCHI.
-
-Another direct insight from figure \@ref(fig:count-species-villagers) is that each personality type relates to a single gender. Female villagers in the Animal Crossing World are either normal, peppy, snooty or uchi while males are either cranky, jocky, lazy or smug. 
+According to figure \@ref(fig:count-species-villagers), the villagers in the Animal Crossing world belong to either of eight different personality types - male personality types (cranky, jock, lazy, smug) and female personality types (normal, peppy, smug, snooty, uchi). It's interesting how most villagers have normal or lazy personalities, while very few have smug or uchi personalities. The Uchi personality type which is also the rarest personality type, is described as sisterly, tough and caring about their appearance @UCHI.
 
 
 ```{r species-personality-villagers, fig.cap="The different personallity types of each species"}
