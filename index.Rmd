@@ -290,8 +290,13 @@ user_reviews %>%
 Most users score the game as a 0, while other users score the game as a 10. Almost all user scores are distributed to the two ends of the range of scores with very little reviews scoring the game a 5, 6 or 7. With the sudden hype about the game in the recent past, the low review scores seem questionable and may even thought of as the default score attached to a review if not explicitly stated.
 
 ```{r low-grade-review}
+
+user_review_words <- user_reviews %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words, by="word") 
+
 low_grade_review <- user_review_words %>%
-  filter(grade < 4) %>%
+  filter(grade<4) %>%
   group_by(word) %>%
   summarise(freq = n()) %>%
   arrange(desc(freq))
