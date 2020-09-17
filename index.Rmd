@@ -222,12 +222,14 @@ ggplotly(items %>%
 ```
 
 It's interesting how the median selling price of each category is lower than the median buying price except for tools. The median buying prices of fish, fossils and seashells are not available as they are not available for sale in the animal crossing world.
-The difference between the median buying price and median selling price is proportional to the distance between the two points on each category. Furniture seems to have the highest median profit, while photos seem to have the least.
+The difference between the median buying price and median selling price is proportional to the distance between the two points on each category.
+
+Upon attempting to analyse the most profitable items based on resale, it was identified that no item in the Animal Crossing world generated a profit on resale. Furniture seems to have the highest median profit (or in this case, the lowest median loss).
+
+The most expensive item available to buy is the Royal Crown which goes for 1200000 bells while the cheapest item to buy are photos at 40 bells!
 
 
-The most expensive and cheapest items available to be bought in the Animal crossing world are represented in table \@ref(tab:most-expensive-buys) and table \@ref(tab:cheapest-buys)
-
-```{r most-expensive-buys}
+```{r most-expensive-buys, include=FALSE}
 items_prices <- items %>%
   mutate("Profit" = sell_value - buy_value,
          "Selling Price" = paste0(format(sell_value, scientific=F)," ",sell_currency),
@@ -241,7 +243,7 @@ items_prices %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-```{r cheapest-buys}
+```{r cheapest-buys, include=FALSE}
 items_prices %>%
   arrange(buy_value) %>%
   select(name, category,`Buying Price`,`Selling Price`) %>%
@@ -249,8 +251,6 @@ items_prices %>%
   kable(caption = "Cheapest items available to buy") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
-
-The most expensive items available to buy are crowns and furniture such as armors, caskets, pianos and toilets while the cheapest items are all photos. Upon attempting to analyse the most profitable items based on resale, it was identified that no item in the Animal Crossing world generated a profit on resale. 
 
 ## What do the users say?
 
