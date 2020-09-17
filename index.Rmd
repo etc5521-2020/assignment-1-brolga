@@ -205,7 +205,7 @@ ggplotly(items %>%
 
 Figure \@ref(fig:price-distribution-over-categories) visualizes the median buying and selling prices of each item category.
 
-```{r price-distribution-over-categories}
+```{r price-distribution-over-categories, fig.cap="Median Buying and Selling prices of Items in Animal Crossing"}
 ggplotly(items %>%
   group_by(category) %>%
   summarise(med_buy_price = mean(buy_value, na.rm = TRUE),
