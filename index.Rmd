@@ -332,14 +332,18 @@ p2 <- ggplot(high_grade_review[1:20,],
   ggtitle("The top 20 common words in high grade reviews")
 ```
 
-```{r high_vs_low, , fig.cap="The top 15 common words in low and high grade reviews"}
+```{r high-vs-low, fig.cap="The top 20 most common words in low and high grade reviews"}
 library(gridExtra)
-grid.arrange(p1, p2, ncol=2)
+grid.arrange(p1, p2, ncol=1)
 ```
 
-According to the figure \@ref(fig:high_vs_low), there is a lot overlapping for the most common words. We can extract some information is, in the high group, the user in the comments putting more games, series, fun, review, love, amazing and 10 and in the low group, the user in the comments putting more buy, experience, person, 1, progress, family and multiple. Only seven words are different. So it's hard to analyze from common words why users give high marks or low marks. Therefore, it might be interesting to calculate the sentiments of the user reviews and relate them to their respective scores, to identify any correlation among them.
+According to Figure \@ref(fig:high-vs-low), there is a lot overlapping for the most common words.
 
-A sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment.
+Nonetheless, we can extract some information as to how high-grade reviewers feel about the game. These users in the comments use words like fun, love, amazing - all of which emote positive emotions. 
+
+Users who gave low-grade reviews use words like experience, person, one, progress, family and multiple. These are an interesting set of words that deserve further investigation. Upon reading full reviews, it was found that the game only allows 'one' island per Nintendo Switch which would means that if 'multiple' people in a 'family' were using the same device, they would not be able to start their own island. This seems to be the theme of most negative reviews of the game.
+
+Continuing our analysis, a sentiment score between -5 and +5 are given to each user review, where -5 indicates a highly negative sentiment and +5 indicates a highly positive sentiment.
 
 ```{r grade-mean-sentiments}
 
@@ -355,10 +359,11 @@ grade_mean_sentiments <- user_review_words %>%
 grade_mean_sentiments
 ```
 
-The table \@ref(tab:grade-mean-sentiments) shows the mean sentiment in the different group grade.
-We can see very clearly when the higher the mean sentiment is, the higher the user's rating will be. But for this game the mean sentiment in grade 2 group is higher than grade 1 group probably because the user reviews are low.
+Table \@ref(tab:grade-mean-sentiments) shows the mean sentiment in the different group grade.
 
-Figure \@ref(fig:user-review-sentiments) is a boxplot summarizing the sentiment scores of all `r nrow(user_reviews)` from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
+We can see very clearly the higher the mean sentiment of the user's words is, the higher the user's rating will be. 
+
+Figure \@ref(fig:user-review-sentiments) is a boxplot summarizing the sentiment scores of all `r nrow(user_reviews)` reviews from `r min(user_reviews$date)` - `r max(user_reviews$date)`.
 
 ```{r user-review-sentiments, fig.cap="Summary of sentiments of user-reviews"}
 afinn <- get_sentiments("afinn")
@@ -375,21 +380,6 @@ user_review_sentiments <- user_review_words %>%
 ```
 
 The boxplot in figure \@ref(fig:user-review-sentiments) states that the overall sentiment of the user reviews to be just slightly positive at 0.4, which is surprising as it would've been expected to be much higher with the recent popularity it has gotten. Most of the sentiments of the reviews also lie within a range of -1 to +1, which may indicate to us that Animal crossing isn't enjoyed by all and there are as many users dissatisfied by the game or disliking the game as those enjoying it.
-
-The mean sentiment score of each review against its review score is plotted in figure \@ref(fig:user-review-score-vs-sentiment).
-
-```{r user-review-score-vs-sentiment, fig.cap="Mean sentiment score of reviews against its review score"}
-ggplotly(
-  user_review_sentiments %>%
-    rename("user_review_score" = grade) %>%
-  ggplot(aes(x = mean_sentiment,
-             y = user_review_score)) +
-  geom_point() +
-  labs(x = "User review sentiment score",
-       y = "User review score"))
-```
-
-The distribution of points over the plot signifies no clear relationship among the sentiments of the review text and score.
 
 ## What do the critics say?
 
