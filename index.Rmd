@@ -436,7 +436,7 @@ wordcloud(words = (critic_word_freq %>% filter(sentiment == "negative"))$word,
           colors=brewer.pal(8, "Dark2"))
 ```
 
-Figure \@ref(fig:critic-positive-wordcloud) shows the most used positive words in the critic reviews while figure \@ref(fig:critic-negative-word cloud) shows the most negative words. By direct observation of the number of terms in the two word clouds, the positivity seems to overpower the negativity in the critics reviews.
+Figure \@ref(fig:critic-positive-wordcloud) shows the most used positive words in the critic reviews while figure \@ref(fig:critic-negative-wordcloud) shows the most negative words. By direct observation of the number of terms in the two word clouds, the positivity seems to overpower the negativity in the critics reviews.
 
 Figure \@ref(fig:critic-word-categories) is a further breakdown of the words used by critics in their reviews, based on different emotions portrayed.
 
@@ -535,7 +535,7 @@ So, overall the data does not suggest that there is a clear indication that user
 
 Firstly, we can see that the shape of the both weekly average critic and user grades are roughly similar. But how similar? The correlation coefficient of weekly average user grades and weekly average critic grades is `r correlation` which indicates a weak-ish positive relationship between the two. It is not feasible, therefore, to suggest that there might be an influence of critic reviews on user reviews.
 
-The second thing of interest is the dramatic spike seen in critic and user reviews in week 17. Did something happen in week 17 that led to a dramatic shift in the view of the game? Week 17 occurred from the the 22nd of April 2020 to the 28th of April 2020. A quick google search of the term 'Animal Crossing' with a filter on these dates reveals that Nintendo released an update of the game on April the 23rd. [Per Express](https://www.express.co.uk/entertainment/gaming/1271482/Animal-Crossing-New-Horizons-April-update-2-Earth-Day-leaks-reveals-lots-of-NEW-features), the 'Earth Day' update included the addition of a myriad of new features. This evidently enriched the experience of game.
+The second thing of interest is the dramatic spike seen in critic and user reviews in week 17. Did something happen in week 17 that led to a dramatic shift in the view of the game? Week 17 occurred from the the 22nd of April 2020 to the 28th of April 2020. A quick perusal of the full user reviews from this time period reveals that Nintendo released an 'Earth Day' update of the game. This evidently enriched the experience of game.
 
 # Conclusion
 
