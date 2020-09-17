@@ -93,7 +93,7 @@ The 'villagers' and 'items' datasets have been originally retrieved from [Villag
 vis_miss(items)
 ```
 
-It's interesting how the buying value of 22.21% of the items are missing. In order to analyse this further, the percentages of missing buying values of each item category was calculated.
+It's interesting how the buying value (`buy_value`) of 22.21% of the items are missing. In order to analyse this further, the percentages of missing buying values of each item category was calculated.
 
 ```{r miss-buy-values-category, fig.cap="Percentage of missing buying values in each category of items"}
 ggplotly(
@@ -109,7 +109,7 @@ items %>%
 )
 ```
 
-Figure \@ref(fig:miss-buy-values-category) states that all buying values of fish, fossils and seashells are missing. 
+Figure \@ref(fig:miss-buy-values-category) shows that all buying values of fish, fossils and seashells are missing. 
 
 Further research claimed that fish, fossils and seashells can not be bought, which explains the missing buying values. A blog on Animal Crossing states that fish can only be acquired by fishing and can not be bought @FISH. Further, a fan page on Animal Crossing states that fossils can only be dug up and seashells can be collected @FOSSIL. The rest of the missing buying values too were attributed to be due to the inability to purchase the items in the Animal Crossing World.
 
@@ -168,7 +168,7 @@ villagers %>%
 
 As visualized in Figure \@ref(fig:count-species-villagers), there are `r nrow(villagers)` villagers belonging to `r length(unique(villagers$species))` different species in the Animal Crossing world. Cats, rabbits, frogs and squirrels are among the most common species, while bulls, rhinos, cows and octopuses are relatively uncommon. Another interesting observation can be seen in the breakdown of each species by gender. Most species have villagers belonging to both male and female categories, but all bulls and lions are male while all cows are female. This maybe due to the terms 'cow' and 'bull' being gender specific; cows being the female counterpart of bulls. This however does not explain the non-existence of female lions in the Animal Crossing world.
 
-According to figure \@ref(fig:count-species-villagers), the villagers in the Animal Crossing world belong to either of eight different personality types - male personality types (cranky, jock, lazy, smug) and female personality types (normal, peppy, smug, snooty, uchi). It's interesting how most villagers have normal or lazy personalities, while very few have smug or uchi personalities. The Uchi personality type which is also the rarest personality type, is described as sisterly, tough and caring about their appearance @UCHI.
+The villagers in the Animal Crossing world belong to either of eight different personality types - male personality types (cranky, jock, lazy, smug) and female personality types (normal, peppy, smug, snooty, uchi). It's interesting how most villagers have normal or lazy personalities, while very few have smug or uchi personalities. The Uchi personality type which is also the rarest personality type, is described as sisterly, tough and caring about their appearance @UCHI.
 
 
 ```{r species-personality-villagers, fig.cap="The different personallity types of each species"}
